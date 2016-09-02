@@ -1,0 +1,32 @@
+PODS:
+  - Alamofire (3.4.0)
+  - MJRefresh (3.1.0)
+  - SDWebImage (3.7.6):
+    - SDWebImage/Core (= 3.7.6)
+  - SDWebImage/Core (3.7.6)
+  - SnapKit (0.21.0)
+  - SVProgressHUD (2.0.3)
+  - SwiftyJSON (2.3.2)
+  - TZImagePickerController (1.3.2)
+
+DEPENDENCIES:
+  - Alamofire
+  - MJRefresh
+  - SDWebImage
+  - SnapKit
+  - SVProgressHUD
+  - SwiftyJSON
+  - TZImagePickerController
+
+SPEC CHECKSUMS:
+  Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
+  MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
+  SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
+  SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TZImagePickerController: 9cfdcadbf05bfbcb3c47436d4117e5cb0fe7bacb
+
+PODFILE CHECKSUM: e8eea251b95ea1cd7d334f31155c0712ba934def
+
+COCOAPODS: 1.0.1
