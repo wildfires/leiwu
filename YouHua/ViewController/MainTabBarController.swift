@@ -45,7 +45,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         //登陆后改变tabbar当前view
         loginVC.dismissLoginViewController = { [weak self] in
-            self!.selectedIndex = 0
+            self!.selectedIndex = 3
         }
         
         presentViewController(loginVC, animated: true, completion: nil)
