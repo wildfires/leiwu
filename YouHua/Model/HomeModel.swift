@@ -10,17 +10,17 @@ import Foundation
 
 struct HomeModel {
     
-    var did: Int
-    var avatar: String
-    var nickname: String
-    var cover: String
-    var photo: Int
-    var content: String
-    var comments: Int
-    var likes: Int
-    var video: String
-    var type: String
-    var dateline: Int
+    var did: Int?
+    var avatar: String?
+    var nickname: String?
+    var cover: String?
+    var photo: Int?
+    var content: String?
+    var comments: Int?
+    var likes: Int?
+    var video: String?
+    var type: String?
+    var dateline: Int?
     //var my_thumbnailUrls = [ImageUrlModel]()
     
     /**
@@ -42,7 +42,7 @@ struct HomeModel {
         self.comments = dict["comments"] as? Int ?? 0
         self.likes = dict["likes"] as? Int ?? 1
         self.video = dict["video"] as? String ?? ""
-        self.type = dict["type"] as! String
+        self.type = dict["type"] as? String
         self.dateline = dict["dateline"] as? Int ?? 0
         
         //字典中还有数组，直接转模型

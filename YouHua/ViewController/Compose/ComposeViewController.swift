@@ -92,13 +92,13 @@ class ComposeViewController: UIViewController, ComposeProtocol {
         case UICollectionElementKindSectionHeader:
             
             let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "header", forIndexPath: indexPath) as! ComposeReusableView
-            headerView.initHeaderView()
+            headerView.initView(ComposeViewType.Header)
             textData = headerView.textView.text
             return headerView
         case UICollectionElementKindSectionFooter:
             
             let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "footer", forIndexPath: indexPath) as! ComposeReusableView
-            footerView.initFooterView()
+            footerView.initView(ComposeViewType.Footer)
             return footerView
         default:
             return ComposeReusableView()

@@ -18,6 +18,8 @@ class MineViewController: UIViewController, MineProtocol {
     var userid: Int = 0
     let headHeight: CGFloat = 200
     
+    var viewModel = MineViewModel()
+    
     lazy var headView: UIImageView = {
         let temp = UIImageView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 260))
         temp.contentMode = .ScaleAspectFill
@@ -119,11 +121,13 @@ class MineViewController: UIViewController, MineProtocol {
     
     func settingViewAction() {
         
-        print("退出登录")
-        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isLogin")
+//        print("退出登录")
+//        NSUserDefaults.standardUserDefaults().setBool(false, forKey: "isLogin")
+        viewModel.logout()
+        
         // 弹出一个controller
         let loginVC = LoginAndRegController()
-        loginVC.loginViewAction()
+        loginVC.initView(LoginRegViewType.Login)
         //退出后 如果不登陆跳转到首页
         loginVC.isJumpHomeViewController = true
         
@@ -156,44 +160,44 @@ class MineViewController: UIViewController, MineProtocol {
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
         switch kind {
-        case UICollectionElementKindSectionHeader:
-            
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "header", forIndexPath: indexPath) as! MineReusableView
-            headerView.initHeaderView()
-            
-            if userid > 0 {
-                headerView.followAndEditButton.setTitle("+ 关注", forState: .Normal)
-                headerView.followAndEditButton.addTarget(self, action: #selector(basicAction), forControlEvents: .TouchUpInside)
+            case UICollectionElementKindSectionHeader:
                 
-                headerView.avatarView.image = UIImage(named: "logo")
-                headerView.sexView.image = UIImage(named: "sex2")
-                headerView.sexView.backgroundColor = RGBA(red: 226, green: 49, blue: 65, alpha: 1)
-                headerView.trendsView.numberLabel.text = "193.5k"
-                headerView.followsView.numberLabel.text = "18"
-                headerView.fansView.numberLabel.text = "1.0k"
-                headerView.addressButton.setTitle("武汉 黄石市", forState: .Normal)
-                headerView.signLabel.attributedText = "有花,就是我一直寻找的东西。".stringWithParagraphlineSpeace(6, color: UIColor.greenColor(), font: UIFont(name: FONT_NAME, size: 14)!)
-            } else {
-                headerView.followAndEditButton.setTitle("编辑个人资料", forState: .Normal)
-                headerView.followAndEditButton.addTarget(self, action: #selector(basicAction), forControlEvents: .TouchUpInside)
+                let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "header", forIndexPath: indexPath) as! MineReusableView
+                headerView.initHeaderView()
                 
-                headerView.avatarView.image = UIImage(named: "img_09")
-                headerView.sexView.image = UIImage(named: "sex1")
-                headerView.sexView.backgroundColor = RGBA(red: 79, green: 148, blue: 291, alpha: 1)
-                headerView.trendsView.numberLabel.text = "93.7k"
-                headerView.followsView.numberLabel.text = "198"
-                headerView.fansView.numberLabel.text = "1.6k"
-                headerView.addressButton.setTitle("北京 朝阳区", forState: .Normal)
-                headerView.signLabel.attributedText = "精选,分享,讨论是我们的建站使命。在这里你可以最短的时间收集灵感,寻找有趣的东西。".stringWithParagraphlineSpeace(6, color: UIColor.greenColor(), font: UIFont(name: FONT_NAME, size: 14)!)
-            }
-            //传入不同数组给数据
-            
-            
-            //headerView.backgroundColor = UIColor.grayColor()
-            
-            return headerView
-        default:
-            return MineReusableView()
+                if userid > 0 {
+                    headerView.followAndEditButton.setTitle("+ 关注", forState: .Normal)
+                    headerView.followAndEditButton.addTarget(self, action: #selector(basicAction), forControlEvents: .TouchUpInside)
+                    
+                    headerView.avatarView.image = UIImage(named: "logo")
+                    headerView.sexView.image = UIImage(named: "sex2")
+                    headerView.sexView.backgroundColor = RGBA(red: 226, green: 49, blue: 65, alpha: 1)
+                    headerView.trendsView.numberLabel.text = "193.5k"
+                    headerView.followsView.numberLabel.text = "18"
+                    headerView.fansView.numberLabel.text = "1.0k"
+                    headerView.addressButton.setTitle("武汉 黄石市", forState: .Normal)
+                    headerView.signLabel.attributedText = "有花,就是我一直寻找的东西。".stringWithParagraphlineSpeace(6, color: UIColor.greenColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+                } else {
+                    headerView.followAndEditButton.setTitle("编辑个人资料", forState: .Normal)
+                    headerView.followAndEditButton.addTarget(self, action: #selector(basicAction), forControlEvents: .TouchUpInside)
+                    
+                    headerView.avatarView.image = UIImage(named: "img_09")
+                    headerView.sexView.image = UIImage(named: "sex1")
+                    headerView.sexView.backgroundColor = RGBA(red: 79, green: 148, blue: 291, alpha: 1)
+                    headerView.trendsView.numberLabel.text = "93.7k"
+                    headerView.followsView.numberLabel.text = "198"
+                    headerView.fansView.numberLabel.text = "1.6k"
+                    headerView.addressButton.setTitle("北京 朝阳区", forState: .Normal)
+                    headerView.signLabel.attributedText = "精选,分享,讨论是我们的建站使命。在这里你可以最短的时间收集灵感,寻找有趣的东西。".stringWithParagraphlineSpeace(6, color: UIColor.greenColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+                }
+                //传入不同数组给数据
+                
+                
+                //headerView.backgroundColor = UIColor.grayColor()
+                
+                return headerView
+            default:
+                return MineReusableView()
         }
     }
     
@@ -208,7 +212,7 @@ class MineViewController: UIViewController, MineProtocol {
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
         
         let loginVC = LoginAndRegController()
-        loginVC.loginViewAction()
+        loginVC.initView(LoginRegViewType.Login)
         presentViewController(loginVC, animated: true, completion: nil)
     }
     

@@ -92,8 +92,8 @@ class CommentTopCell: UITableViewCell, WFRichText {
         if let url: String = model.cover {
             homeCellView.coverView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: THUMB_IMG))
         }
-        homeCellView.barView.praiseButton.setTitle(model.likes.withCount, forState: .Normal)
-        homeCellView.barView.discussButton.setTitle(model.comments.withCount, forState: .Normal)
-        homeCellView.digestLabel.attributedText = model.content.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+        homeCellView.barView.praiseButton.setTitle(model.likes!.withCount, forState: .Normal)
+        homeCellView.barView.discussButton.setTitle(model.comments!.withCount, forState: .Normal)
+        homeCellView.digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
     }
 }

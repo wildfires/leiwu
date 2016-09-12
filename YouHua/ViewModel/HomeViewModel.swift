@@ -10,12 +10,12 @@ import UIKit
 
 typealias HomeViewModelFinished = (success: Bool) -> ()
 
-class HomeViewModel: UIViewController, WFNetwork, WFProgress, WFCacheData {
+class HomeViewModel: NSObject, WFProgress, WFCacheData {
     
     var currentPage: Int = 0
     var topArray: Array<HomeModel> = []
-    var tableArray: Array<HomeModel> = []
-    
+    //var tableArray: Array<HomeModel> = []
+    var tableArray = [HomeModel]()
     
     var cellTopNumberOfRows: Int {
         
@@ -28,43 +28,47 @@ class HomeViewModel: UIViewController, WFNetwork, WFProgress, WFCacheData {
     }
     
     //请求数据([VideoNewsModel]?) -> Void)
-    func fetchHomeData(finished: HomeViewModelFinished) {
+    func fetchHomeData(finished: (success: [HomeModel]) -> ()) {
         
-        WFShowHUD("数据加载", status: WFStatusHUD.Success)
+        //WFShowHUD("数据加载", status: WFStatusHUD.Success)
         var parameters: [String: AnyObject]
         
         parameters = [
             "page": currentPage
         ]
         
-        WFGet(home_url, parameters: parameters) { (success, result, error) in
+        WFNetwork.shareNetwork.WFGet(home_url, parameters: parameters) { (success, result, error) in
             
-            guard let result = result where result["code"] == 200 else {
+            if let result = result {
                 
-                //self.WFHideHUD()
-                //self.WFShowHUD("无数据", status: WFStatusHUD.Failure)
-                print(success, error, parameters)
-                print("数据")
-                finished(success: false)
-                return
+                let code = result["code"].intValue
+                let info = result["info"].stringValue
+                
+                guard code == RETURN_CODE else {
+                    
+                    self.WFShowHUD(info, status: WFStatusHUD.Failure)
+                    return
+                }
+                
+                if let data = result["data"].arrayObject {
+                    
+                    
+                    //下拉刷新
+                    if self.currentPage == 1 {
+                        self.tableArray.removeAll()
+                    }
+                    
+                    var tempArray = [HomeModel]()
+                    for dict in data {
+                        //字典转模型
+                        let tempModel = HomeModel(dict: dict as! [String : AnyObject])
+                        //添加到一个数组
+                        tempArray.append(tempModel)
+                    }
+                    finished(success: tempArray)
+                    //self.WFHideHUD()
+                }
             }
-            
-            let tempArray = result["data"].arrayObject as! [[String : AnyObject]]
-            //下拉刷新
-            if self.currentPage == 1 {
-                self.tableArray.removeAll()
-            }
-            
-            print(tempArray)
-            for dict in tempArray {
-                //字典转模型
-                let tmpModel = HomeModel(dict: dict)
-                //添加到一个数组
-                self.tableArray.append(tmpModel)
-            }
-            print(self.currentPage)
-            finished(success: true)
-            self.WFHideHUD()
         }
     }
     
@@ -78,7 +82,7 @@ class HomeViewModel: UIViewController, WFNetwork, WFProgress, WFCacheData {
             "page": id
         ]
         
-        WFGet(banner_url, parameters: parameters) { (success, result, error) in
+        WFNetwork.shareNetwork.WFGet(banner_url, parameters: parameters) { (success, result, error) in
             
             guard let result = result where result["code"] == 200 else {
                 
@@ -103,7 +107,7 @@ class HomeViewModel: UIViewController, WFNetwork, WFProgress, WFCacheData {
             "act": "user"
         ]
         
-        WFGet(banner_url, parameters: parameters) { (success, result, error) in
+        WFNetwork.shareNetwork.WFGet(banner_url, parameters: parameters) { (success, result, error) in
             
             guard let result = result where result["code"] == 200 else {
                 

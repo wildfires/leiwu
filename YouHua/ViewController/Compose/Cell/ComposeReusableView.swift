@@ -9,6 +9,11 @@
 import UIKit
 import SnapKit
 
+enum ComposeViewType: Int {
+    case Header
+    case Footer
+}
+
 class ComposeReusableView: UICollectionReusableView, UITextViewDelegate {
     
     lazy var textView: UITextView = {
@@ -73,6 +78,16 @@ class ComposeReusableView: UICollectionReusableView, UITextViewDelegate {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func initView(viewType: ComposeViewType) {
+        
+        switch viewType {
+            case .Header:
+                initHeaderView()
+            case .Footer:
+                initFooterView()
+        }
     }
     
     func initHeaderView() {

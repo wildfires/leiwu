@@ -11,8 +11,14 @@ import UIKit
 
 public let API_RUL: String = "http://n.xinjushang.com" ///n
 public let home_url: String = "/api/get_home/"
+public let login_url: String = "/api/login/"
+public let register_url: String = "/api/register/"
+
 public let banner_url: String = "/json/api.php"
 public let compose_url: String = "/json/upload.php"
+
+//状态码
+public let RETURN_CODE: Int = 200
 
 public let SCREEN_WIDTH: CGFloat = UIScreen.mainScreen().bounds.size.width
 public let SCREEN_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.size.height

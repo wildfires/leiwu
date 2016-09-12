@@ -10,11 +10,6 @@ import UIKit
 
 class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     
-    var userID: Bool {
-        
-        return NSUserDefaults.standardUserDefaults().boolForKey("isLogin")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,17 +30,17 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             return true
         }
         //判断用户是否登陆过
-        guard userID == false else {
+        guard MineViewModel.isLogin == false else {
             return true
         }
         
         // 弹出一个controller
         let loginVC = LoginAndRegController()
-        loginVC.loginViewAction()
+        loginVC.initView(LoginRegViewType.Login)
         
         //登陆后改变tabbar当前view
         loginVC.dismissLoginViewController = { [weak self] in
-            self!.selectedIndex = 3
+            self!.selectedIndex = 0
         }
         
         presentViewController(loginVC, animated: true, completion: nil)

@@ -71,30 +71,30 @@ class AvatarView: UIView {
         }
         
         switch avatarSize {
-        case .Large:
-            
-            nickLabel.snp_makeConstraints { (make) in
-                make.top.equalTo(headView.snp_top).offset(0)
-                make.left.equalTo(headView.snp_right).offset(8)
-                make.height.equalTo(boxSize / 2)
-            }
-            dateLabel.snp_makeConstraints { (make) in
-                make.left.equalTo(headView.snp_right).offset(8)
-                make.bottom.equalTo(headView.snp_bottom).offset(0)
-                make.height.equalTo(boxSize / 2)
-            }
-        case .Small:
-            
-            nickLabel.snp_makeConstraints { (make) in
-                make.top.equalTo(weakSelf!).offset(0)
-                make.left.equalTo(headView.snp_right).offset(8)
-                make.height.equalTo(boxSize)
-            }
-            dateLabel.snp_makeConstraints { (make) in
-                make.top.equalTo(weakSelf!).offset(3)
-                make.left.equalTo(nickLabel.snp_right).offset(4)
-                make.height.equalTo(boxSize - 3)
-            }
+            case .Large:
+                
+                nickLabel.snp_makeConstraints { (make) in
+                    make.top.equalTo(headView.snp_top).offset(0)
+                    make.left.equalTo(headView.snp_right).offset(8)
+                    make.height.equalTo(boxSize / 2)
+                }
+                dateLabel.snp_makeConstraints { (make) in
+                    make.left.equalTo(headView.snp_right).offset(8)
+                    make.bottom.equalTo(headView.snp_bottom).offset(0)
+                    make.height.equalTo(boxSize / 2)
+                }
+            case .Small:
+                
+                nickLabel.snp_makeConstraints { (make) in
+                    make.top.equalTo(weakSelf!).offset(0)
+                    make.left.equalTo(headView.snp_right).offset(8)
+                    make.height.equalTo(boxSize)
+                }
+                dateLabel.snp_makeConstraints { (make) in
+                    make.top.equalTo(weakSelf!).offset(3)
+                    make.left.equalTo(nickLabel.snp_right).offset(4)
+                    make.height.equalTo(boxSize - 3)
+                }
         }
         
         headView.userInteractionEnabled = true

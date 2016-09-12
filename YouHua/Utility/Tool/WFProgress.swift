@@ -18,32 +18,36 @@ enum WFStatusHUD: Int {
 
 protocol WFProgress {
     
-    func WFShowHUD(title: String, status: WFStatusHUD)
-    func WFHideHUD()
+//    func WFShowHUD(title: String, status: WFStatusHUD)
+//    func WFHideHUD()
 }
 
 extension WFProgress {
     
     func WFShowHUD(title: String, status: WFStatusHUD) {
         
+        SVProgressHUD.showWithStatus(title)
         switch status {
             
             case .Waiting:
             
-                SVProgressHUD.show()
+                SVProgressHUD.showWithStatus(title)
             case .Success:
                 
-                SVProgressHUD.show()
+                //SVProgressHUD.showWithStatus(title)
+                WFHideHUD()
             case .Failure:
                 
-                SVProgressHUD.show()
+                //SVProgressHUD.showWithStatus(title)
+                WFHideHUD()
         }
-        //SVProgressHUD.show()
     }
     
     func WFHideHUD() {
-        
-        SVProgressHUD.dismiss()
+        //控制弹框在1秒后消失
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(1 * NSEC_PER_SEC)), dispatch_get_main_queue()) {
+            SVProgressHUD.dismiss()
+        }
     }
 //    //感叹号
 //    

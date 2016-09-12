@@ -10,10 +10,10 @@ import Foundation
 
 class FindModel: NSObject {
     
-    var cover: String
+    var cover: String?
     
     init(dict: [String: AnyObject]) {
         
-        self.cover = dict["url"] as! String
+        self.cover = dict["url"] as? String
     }
 }

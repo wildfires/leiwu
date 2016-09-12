@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FindViewModel: NSObject, WFNetwork {
+class FindViewModel: NSObject {
     
     //var bannerArray: [FindModel] = []
     var bannerArray: NSArray?
@@ -22,7 +22,7 @@ class FindViewModel: NSObject, WFNetwork {
             "act": "banner"
         ]
         
-        WFGet(banner_url, parameters: parameters) { (success, result, error) in
+        WFNetwork.shareNetwork.WFGet(banner_url, parameters: parameters) { (success, result, error) in
             
             guard let result = result where result["code"] == 200 else {
                 

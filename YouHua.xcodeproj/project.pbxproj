@@ -52,6 +52,8 @@
 		C354AD4B1D63FEB70031F0D7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354AD4A1D63FEB70031F0D7 /* VideoViewController.swift */; };
 		C35E1A921D6DA4470067C9A0 /* WFCacheData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35E1A911D6DA4470067C9A0 /* WFCacheData.swift */; };
 		C36566DC1D4618B100C625FB /* HomeCellBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36566DB1D4618B100C625FB /* HomeCellBarView.swift */; };
+		C366485B1D7D4A660009C242 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C366485A1D7D4A660009C242 /* UserModel.swift */; };
+		C366485D1D7D58C30009C242 /* MineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C366485C1D7D58C30009C242 /* MineViewModel.swift */; };
 		C36B88191D6ED00700045447 /* FindModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36B88181D6ED00700045447 /* FindModel.swift */; };
 		C36C53AB1D75230C001A8ED2 /* WFTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36C53AA1D75230C001A8ED2 /* WFTableViewModel.swift */; };
 		C36C53AD1D7527F1001A8ED2 /* MallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36C53AC1D7527F1001A8ED2 /* MallViewController.swift */; };
@@ -259,6 +261,8 @@
 		C354AD4A1D63FEB70031F0D7 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		C35E1A911D6DA4470067C9A0 /* WFCacheData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WFCacheData.swift; sourceTree = "<group>"; };
 		C36566DB1D4618B100C625FB /* HomeCellBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCellBarView.swift; sourceTree = "<group>"; };
+		C366485A1D7D4A660009C242 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		C366485C1D7D58C30009C242 /* MineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineViewModel.swift; sourceTree = "<group>"; };
 		C36B88181D6ED00700045447 /* FindModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindModel.swift; sourceTree = "<group>"; };
 		C36C53AA1D75230C001A8ED2 /* WFTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WFTableViewModel.swift; sourceTree = "<group>"; };
 		C36C53AC1D7527F1001A8ED2 /* MallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MallViewController.swift; sourceTree = "<group>"; };
@@ -501,6 +505,7 @@
 			children = (
 				C30090921D2BBCD7000B28D3 /* HomeModel.swift */,
 				C36B88181D6ED00700045447 /* FindModel.swift */,
+				C366485A1D7D4A660009C242 /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -553,6 +558,7 @@
 			isa = PBXGroup;
 			children = (
 				C3427D901D1BCDF400251E72 /* HomeViewModel.swift */,
+				C366485C1D7D58C30009C242 /* MineViewModel.swift */,
 				C36C53AA1D75230C001A8ED2 /* WFTableViewModel.swift */,
 				C3481F2F1D4CA24D008FC9E7 /* FindViewModel.swift */,
 			);
@@ -1133,6 +1139,7 @@
 				C3FF4FEC1D3B360A0036DC20 /* LoginAndRegController.swift in Sources */,
 				C34B6CD91D265DF300E36A00 /* WFShare.swift in Sources */,
 				C3427D991D1BDAFA00251E72 /* BannerView.swift in Sources */,
+				C366485D1D7D58C30009C242 /* MineViewModel.swift in Sources */,
 				C30090931D2BBCD7000B28D3 /* HomeModel.swift in Sources */,
 				C3481F301D4CA24D008FC9E7 /* FindViewModel.swift in Sources */,
 				C3427D9B1D1BEB6400251E72 /* WFNetwork.swift in Sources */,
@@ -1149,6 +1156,7 @@
 				C36566DC1D4618B100C625FB /* HomeCellBarView.swift in Sources */,
 				C3FEA4E41D4315D400048D21 /* BasicViewController.swift in Sources */,
 				C34579F41D236D5400E528A9 /* MessageViewCell.swift in Sources */,
+				C366485B1D7D4A660009C242 /* UserModel.swift in Sources */,
 				C3427D911D1BCDF400251E72 /* HomeViewModel.swift in Sources */,
 				C37741D21D683EF1001891C2 /* AvatarView.swift in Sources */,
 				C3055E7E1D225809007BF30D /* CateViewCell.swift in Sources */,

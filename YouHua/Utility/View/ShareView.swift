@@ -20,7 +20,7 @@ class ShareView: UIView {
     var VIEW_HEIGHT: CGFloat = 0
     
     let shareHeight: CGFloat = 80 + 80
-    var sharePicArr: NSArray = ["18001","18001","18001","18001","18001"]
+    var sharePicArr: NSArray = ["Share_WeChatSessionIcon_70x70_","Share_WeChatTimelineIcon_70x70_","Share_WeiboIcon_70x70_","Share_QQIcon_70x70_","Share_QzoneIcon_70x70_"]
     var shareTitArr: NSArray = ["微信","朋友圈","微博","QQ好友","QQ空间"]
     
     

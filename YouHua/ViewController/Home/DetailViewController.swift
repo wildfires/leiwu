@@ -55,7 +55,7 @@ class DetailViewController: UIViewController, DetailProtocol {
         super.viewDidLoad()
         
         initView()
-        viewModel.fetchOneData(detail_id) { (success) in
+        viewModel.fetchOneData(Int(detail_id)) { (success) in
             
             guard success == true else {
                 return
@@ -108,9 +108,9 @@ class DetailViewController: UIViewController, DetailProtocol {
         
         viewModel.fetchHomeData() { (success) in
             
-            guard success == true else {
-                return
-            }
+//            guard success == true else {
+//                return
+//            }
             self.tableView.reloadData()
         }
     }
@@ -161,7 +161,7 @@ class DetailViewController: UIViewController, DetailProtocol {
                 
                 if let condata: HomeModel = viewModel.topArray[0] {
                     cell.configureCell(condata, indexPath: indexPath)
-                    self.contentRowHeight = cell.rowHeight(condata.content)
+                    self.contentRowHeight = cell.rowHeight(condata.content!)
                     
                     avatarView.delegate = self
                     avatarView.headView.tag = indexPath.row
@@ -181,7 +181,7 @@ class DetailViewController: UIViewController, DetailProtocol {
                 //models.objectAtIndex(indexPath.row) as? WXStatusModel
                 if let comdata: HomeModel = viewModel.tableArray[indexPath.row] {
                     cell.configureCell(comdata, indexPath: indexPath)
-                    self.commentRowHeight = cell.rowHeight(comdata.content)
+                    self.commentRowHeight = cell.rowHeight(comdata.content!)
                     cell.avatarView.delegate = self
                 }
                 return cell
@@ -211,7 +211,7 @@ class DetailViewController: UIViewController, DetailProtocol {
                 headerView.backgroundColor = UIColor.grayColor()
                 let titleLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 39.5))
                 titleLabel.backgroundColor = UIColor.whiteColor()
-                titleLabel.text = "  评论列表 \(3+viewModel.cellNumberOfRows)"
+                titleLabel.text = "  评论列表 \(viewModel.cellNumberOfRows)"
                 titleLabel.font = UIFont(name: FONT_NAME, size: 14)
                 headerView.addSubview(titleLabel)
                 
@@ -227,7 +227,7 @@ class DetailViewController: UIViewController, DetailProtocol {
         let data = viewModel.tableArray[row]
         
         let mineVC = MineViewController()
-        mineVC.userid = data.did
+        mineVC.userid = data.did!
         mineVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(mineVC, animated: true)
     }

@@ -117,7 +117,7 @@ class CommentViewCell: UITableViewCell {
             avatarView.headView.sd_setImageWithURL(NSURL(string: url))
         }
         avatarView.nickLabel.text = model.nickname
-        avatarView.dateLabel.text = model.dateline.withDate
-        digestLabel.attributedText = model.content.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+        avatarView.dateLabel.text = model.dateline!.withDate
+        digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
     }
 }

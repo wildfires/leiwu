@@ -12,6 +12,18 @@ import SDWebImage
 
 class HomeViewCell: UITableViewCell, WFRichText {
     
+//    var cellData: HomeModel? {
+//        didSet {
+//            let url = concern!.avatar_url!
+//            titleImageView.kf_setImageWithURL(NSURL(string: url)!)
+//            titleLabel.text = concern!.name
+//            peopleCountLabel.text = "\(concern!.concern_count)人关心"
+//            peopleCountLabel.hidden = Bool(concern!.concern_count) ? false : true
+//            commentCountLabel.text = "\(concern!.discuss_count)条评论"
+//            commentCountLabel.hidden = Bool(concern!.discuss_count) ? false : true
+//        }
+//    }
+    
     lazy var containerView: UIImageView = {
         let temp = UIImageView()
         temp.backgroundColor = UIColor.whiteColor()
@@ -110,7 +122,7 @@ class HomeViewCell: UITableViewCell, WFRichText {
             homeCellView.numberLabel.text = "00:10"
         } else {
             homeCellView.playButton.hidden = true
-            homeCellView.numberLabel.text = "\(model.photo) 张图"
+            homeCellView.numberLabel.text = "\(model.photo!) 张图"
         }
         if let url: String = model.avatar {
             avatarView.headView.sd_setImageWithURL(NSURL(string: url))
@@ -118,11 +130,11 @@ class HomeViewCell: UITableViewCell, WFRichText {
         if let url: String = model.cover {
             homeCellView.coverView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: THUMB_IMG))
         }
-        avatarView.nickLabel.text = model.nickname
-        avatarView.dateLabel.text = model.dateline.withDate
-        homeCellView.barView.praiseButton.setTitle(model.likes.withCount, forState: .Normal)
-        homeCellView.barView.discussButton.setTitle(model.comments.withCount, forState: .Normal)
-        homeCellView.digestLabel.attributedText = model.content.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+        avatarView.nickLabel.text = model.nickname!
+        avatarView.dateLabel.text = model.dateline!.withDate
+        homeCellView.barView.praiseButton.setTitle(model.likes!.withCount, forState: .Normal)
+        homeCellView.barView.discussButton.setTitle(model.comments!.withCount, forState: .Normal)
+        homeCellView.digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
         
         avatarView.headView.tag = row
         avatarView.nickLabel.tag = row

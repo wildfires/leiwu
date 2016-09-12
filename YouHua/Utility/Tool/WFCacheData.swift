@@ -61,8 +61,19 @@ extension WFCacheData {
         
         //保存用户信息
         userDefaults.setObject(account, forKey: "account")
+        userDefaults.setObject(account["uid"], forKey: "userID")
         userDefaults.setObject(account["user"], forKey: "userName")
         userDefaults.setObject(account["pass"], forKey: "userPass")
+    }
+    
+    func dissAccount() {
+        
+        saveAccount([:])
+    }
+    
+    func isCheckingLogined() -> Bool {
+        
+        return false
     }
     
     func getAccount() -> NSDictionary {
@@ -71,6 +82,14 @@ extension WFCacheData {
         let userAccount: NSDictionary = userDefaults.objectForKey("account") as! NSDictionary
         
         return userAccount
+    }
+    
+    func getUserID() -> String {
+        
+        let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        let userID: String = userDefaults.objectForKey("userID") as! String
+        
+        return userID
     }
     
     func getUserName() -> String {

@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //释放内存
         SDImageCache.sharedImageCache().clearMemory()
+        
     }
 }
 

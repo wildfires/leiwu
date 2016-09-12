@@ -9,11 +9,22 @@
 import UIKit
 import SnapKit
 
+//enum AvatarSize: Int {
+//    case Large
+//    case Small
+//}
+enum LoginRegViewType: Int {
+    case Login
+    case Register
+}
+
 typealias dismissLoginViewControllerBlock = () -> Void
 
 class LoginAndRegController: UIViewController, UITextFieldDelegate {
 
     var dismissLoginViewController: dismissLoginViewControllerBlock!
+    
+    var viewModel = MineViewModel()
     
     var topConstraint: Constraint? //顶部约束
     var isJumpHomeViewController: Bool = false
@@ -75,7 +86,6 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
         let temp = UIButton()
         temp.layer.cornerRadius = 4
         temp.layer.masksToBounds = true
-        temp.backgroundColor = UIColor.orangeColor()
         temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 14)
         return temp
     }()
@@ -97,7 +107,7 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initView()
+        //initView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -105,7 +115,7 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func initView() {
+    func initView(viewType: LoginRegViewType) {
         
         navigationController?.navigationBar.hidden = true
         
@@ -178,6 +188,40 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
             make.top.equalTo(loginAndRegisterButton.snp_bottom).offset(5)
             make.right.equalTo(loginAndRegisterButton.snp_right).offset(0)
         }
+        
+        switch viewType {
+            case .Login:
+                loginViewAction()
+            case .Register:
+                registerViewAction()
+        }
+    }
+    
+    func loginViewAction() {
+
+        forgotButton.hidden = false
+        imageView.image = UIImage(named: "login_bg_10")
+        userField.placeholder = "请输入手机号或邮箱"
+        passField.placeholder = "请输入登陆密码"
+        loginAndRegisterButton.setTitle("登陆", forState: .Normal)
+        loginAndRegisterButton.addTarget(self, action: #selector(loginAction), forControlEvents: .TouchUpInside)
+        loginAndRegisterButton.backgroundColor = UIColor.orangeColor()
+        changeButton.setTitle("注册帐号", forState: .Normal)
+        changeButton.addTarget(self, action: #selector(registerViewAction), forControlEvents: .TouchUpInside)
+    }
+
+    func registerViewAction() {
+
+        userField.becomeFirstResponder()
+        forgotButton.hidden = true
+        imageView.image = UIImage(named: "login_bg_05")
+        userField.placeholder = "请输入手机号或邮箱"
+        passField.placeholder = "请输入注册密码"
+        loginAndRegisterButton.setTitle("注册", forState: .Normal)
+        loginAndRegisterButton.addTarget(self, action: #selector(registerAction), forControlEvents: .TouchUpInside)
+        loginAndRegisterButton.backgroundColor = UIColor.greenColor()
+        changeButton.setTitle("返回登陆", forState: .Normal)
+        changeButton.addTarget(self, action: #selector(loginViewAction), forControlEvents: .TouchUpInside)
     }
     
     override func closeViewAction() {
@@ -190,44 +234,35 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
     
     func loginAction() {
         
-        dismissLoginViewController()
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isLogin")
-        dismissViewControllerAnimated(true, completion: nil)
+        //得到TextField中输入的内容
+        let userName: String = userField.text!
+        let passWord: String = passField.text!
+        
+        weak var weakSelf: LoginAndRegController? = self
+        viewModel.normalAccountLogin(userName, pass: passWord) { (success) in
+            
+            weakSelf!.dismissLoginViewController()
+            weakSelf!.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     func registerAction() {
         
-        loginAction()
+        //得到TextField中输入的内容
+        let userName: String = userField.text!
+        let passWord: String = passField.text!
+        
+        weak var weakSelf: LoginAndRegController? = self
+        viewModel.normalAccountRegister(userName, pass: passWord) { (success) in
+            
+            weakSelf!.dismissLoginViewController()
+            weakSelf!.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     func forgotPassAction() {
         
         
-    }
-    
-    func loginViewAction() {
-        
-        forgotButton.hidden = false
-        imageView.image = UIImage(named: "login_bg_10")
-        userField.placeholder = "手机或邮箱"
-        passField.placeholder = "登陆密码"
-        loginAndRegisterButton.setTitle("登陆", forState: .Normal)
-        loginAndRegisterButton.addTarget(self, action: #selector(loginAction), forControlEvents: .TouchUpInside)
-        changeButton.setTitle("注册帐号", forState: .Normal)
-        changeButton.addTarget(self, action: #selector(registerViewAction), forControlEvents: .TouchUpInside)
-    }
-    
-    func registerViewAction() {
-        
-        userField.becomeFirstResponder()
-        forgotButton.hidden = true
-        imageView.image = UIImage(named: "login_bg_05")
-        userField.placeholder = "请输入邮箱"
-        passField.placeholder = "请输入密码"
-        loginAndRegisterButton.setTitle("注册", forState: .Normal)
-        loginAndRegisterButton.addTarget(self, action: #selector(registerAction), forControlEvents: .TouchUpInside)
-        changeButton.setTitle("返回登陆", forState: .Normal)
-        changeButton.addTarget(self, action: #selector(loginViewAction), forControlEvents: .TouchUpInside)
     }
     
     //文本框获取焦点
