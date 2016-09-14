@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        window = UIWindow(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+        window = UIWindow(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
         window?.backgroundColor = UIColor.whiteColor()
         window?.rootViewController = isFirstOpenApp() ? GuideViewController() : MainTabBarController()
         window?.makeKeyAndVisible()

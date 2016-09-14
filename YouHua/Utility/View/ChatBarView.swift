@@ -29,12 +29,12 @@ class ChatBarView: UIView {
         
         let temp = UIButton(type: UIButtonType.Custom)
         temp.setTitle("按住 说话", forState: .Normal)
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 14)
+        temp.titleLabel?.font = UIFont(fontSize: 14)
         //temp.backgroundColor = UIColor.grayColor()
         temp.layer.borderColor = UIColor.lightGrayColor().CGColor
         temp.layer.borderWidth = 0.5
         temp.layer.cornerRadius = 5
-        temp.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        temp.setTitleColor(Color_Black, forState: .Normal)
         //recordButton.layer.masksToBounds = true
         temp.hidden = true
         return temp

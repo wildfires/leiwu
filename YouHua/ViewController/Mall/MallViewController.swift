@@ -15,7 +15,7 @@ class MallViewController: UIViewController {
     
     
     lazy var tableView: UITableView = {
-        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
         temp.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 1)
         //temp.separatorStyle = .None
         return temp

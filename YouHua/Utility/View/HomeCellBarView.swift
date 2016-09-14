@@ -23,20 +23,26 @@ class HomeCellBarView: UIView {
     var rowId: Int = 0
     
     lazy var praiseButton: UIButton = {
-        let temp = UIButton(image: "ic_me_item_collection_topic_20x20_", title: "0", font: UIFont(name: FONT_NAME, size: 12), color: UIColor.grayColor())
+        let temp = UIButton(image: "ic_me_item_collection_topic_20x20_", title: "0", font: UIFont(fontSize: 12), color: Color_Gray)
         temp.addTarget(self, action: #selector(barButtonAction(_:)), forControlEvents: .TouchUpInside)
         return temp
     }()//赞/喜好
     lazy var discussButton: UIButton = {
-        let temp = UIButton(image: "ic_me_item_message_20x20_", title: "0", font: UIFont(name: FONT_NAME, size: 12), color: UIColor.grayColor())
+        let temp = UIButton(image: "ic_me_item_message_20x20_", title: "0", font: UIFont(fontSize: 12), color: Color_Gray)
         temp.addTarget(self, action: #selector(barButtonAction(_:)), forControlEvents: .TouchUpInside)
         return temp
     }()//评论
     lazy var shareButton: UIButton = {
-        let temp = UIButton(image: "ic_me_item_collection_comic_20x20_", title: "分享", font: UIFont(name: FONT_NAME, size: 12), color: UIColor.grayColor())
+        let temp = UIButton(image: "timeline_icon_retweet", title: "分享", font: UIFont(fontSize: 12), color: Color_Gray)
         temp.addTarget(self, action: #selector(barButtonAction(_:)), forControlEvents: .TouchUpInside)
         return temp
     }()//分享
+    
+    lazy var dateButton: UIButton = {
+        let temp = UIButton(image: "time_commodity_night_16x16_", title: "时间", font: UIFont(fontSize: 12), color: Color_Gray)
+        temp.userInteractionEnabled = false
+        return temp
+    }()//时间
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,18 +62,23 @@ class HomeCellBarView: UIView {
         self.addSubview(praiseButton)
         self.addSubview(discussButton)
         self.addSubview(shareButton)
+        self.addSubview(dateButton)
         
         weak var weakSelf: HomeCellBarView? = self
         praiseButton.snp_makeConstraints { (make) in
-            make.left.equalTo(weakSelf!).offset(0)
-            make.bottom.equalTo(weakSelf!).offset(-4)
+            make.top.left.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, 0, 0, 0))
         }
         discussButton.snp_makeConstraints { (make) in
-            make.left.equalTo(praiseButton.snp_right).offset(10)
-            make.bottom.equalTo(weakSelf!).offset(-4)
+            make.top.equalTo(weakSelf!).offset(0)
+            make.left.equalTo(praiseButton.snp_right).offset(Margin_Width)
         }
         shareButton.snp_makeConstraints { (make) in
-            make.bottom.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, 0, 4, 0))
+            make.top.equalTo(weakSelf!).offset(0)
+            make.left.equalTo(discussButton.snp_right).offset(Margin_Width)
+        }
+        
+        dateButton.snp_makeConstraints { (make) in
+            make.top.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, 0, 0, 0))
         }
     }
     

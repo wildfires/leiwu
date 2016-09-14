@@ -19,7 +19,7 @@ class ChatViewController: UIViewController, ChatProtocol {
     
     let cellIdentifier = "cellid"
     lazy var tableView: UITableView = {
-        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
         temp.separatorStyle = .None
         return temp
     }()
@@ -127,7 +127,7 @@ class ChatViewController: UIViewController, ChatProtocol {
         
         let cell: HomeViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! HomeViewCell
         cell.textLabel?.text = "聊天记录\(indexPath.row)"
-        cell.textLabel?.font = UIFont(name: FONT_NAME, size: 12)
+        cell.textLabel?.font = UIFont(fontSize: 12)
         return cell
     }
     

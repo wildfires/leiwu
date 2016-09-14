@@ -7,14 +7,16 @@
 //
 
 import UIKit
+import MJRefresh
 
 typealias HomeViewModelFinished = (success: Bool) -> ()
+typealias HomeViewModelDataFinished = (result: [HomeModel]) -> ()
 
-class HomeViewModel: NSObject, WFProgress, WFCacheData {
+class HomeViewModel: NSObject, WFProgress {
     
     var currentPage: Int = 0
     var topArray: Array<HomeModel> = []
-    //var tableArray: Array<HomeModel> = []
+    
     var tableArray = [HomeModel]()
     
     var cellTopNumberOfRows: Int {
@@ -26,6 +28,94 @@ class HomeViewModel: NSObject, WFProgress, WFCacheData {
         
         return tableArray.count
     }
+    
+    func loadHomeNewData(tableView: UITableView, finished: HomeViewModelDataFinished) {
+        
+        //weak var weakSelf: HomeViewModel? = self
+        tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            
+            let params: [String: AnyObject] = [
+                "page": 0
+            ]
+            
+            WFNetwork.shareNetwork.WFGET(home_url, parameters: params, finished: { (success, result, error) in
+                
+                tableView.mj_header.endRefreshing()
+                guard let result = result where success == true else {
+                    return
+                }
+                
+                guard let data = result.arrayObject else {
+                    return
+                }
+                
+                var tempData = [HomeModel]()
+                for dict in data {
+                    tempData.append(HomeModel(dict: dict as! [String : AnyObject]))
+                }
+                finished(result: tempData)
+            })
+        })
+        //根据拖拽比例自动切换透明度
+        tableView.mj_header.automaticallyChangeAlpha = true
+        tableView.mj_header.beginRefreshing()
+    }
+    
+    func loadHomeMoreData(tableView: UITableView, finished: HomeViewModelDataFinished) {
+        
+        weak var weakSelf: HomeViewModel? = self
+        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            
+            let params: [String: AnyObject] = [
+                "page": weakSelf!.currentPage
+            ]
+            print("f:\(params)")
+            WFNetwork.shareNetwork.WFGET(home_url, parameters: params, finished: { (success, result, error) in
+                
+                tableView.mj_footer.endRefreshing()
+                guard let result = result where success == true else {
+                    return
+                }
+                
+                guard let data = result.arrayObject else {
+                    
+                    return
+                }
+                
+                var tempData = [HomeModel]()
+                for dict in data {
+                    tempData.append(HomeModel(dict: dict as! [String : AnyObject]))
+                }
+                weakSelf!.currentPage += 1
+                finished(result: tempData)
+            })
+        })
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //请求数据([VideoNewsModel]?) -> Void)
     func fetchHomeData(finished: (success: [HomeModel]) -> ()) {
@@ -44,7 +134,7 @@ class HomeViewModel: NSObject, WFProgress, WFCacheData {
                 let code = result["code"].intValue
                 let info = result["info"].stringValue
                 
-                guard code == RETURN_CODE else {
+                guard code == Code_Success else {
                     
                     self.WFShowHUD(info, status: WFStatusHUD.Failure)
                     return

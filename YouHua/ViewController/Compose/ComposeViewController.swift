@@ -24,11 +24,11 @@ class ComposeViewController: UIViewController, ComposeProtocol {
         //布局对象
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10)
-        flowLayout.itemSize = CGSize(width: (SCREEN_WIDTH - 30) / 3, height: (SCREEN_WIDTH - 30) / 3)
+        flowLayout.itemSize = CGSize(width: (Screen_Width - 30) / 3, height: (Screen_Width - 30) / 3)
         flowLayout.minimumInteritemSpacing = 5 //列间距
         flowLayout.minimumLineSpacing = 5 //行间距
         
-        let temp = UICollectionView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), collectionViewLayout: flowLayout)
+        let temp = UICollectionView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height), collectionViewLayout: flowLayout)
         temp.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 0.5)
         return temp
     }()
@@ -108,13 +108,13 @@ class ComposeViewController: UIViewController, ComposeProtocol {
     //返回分组的头部视图的尺寸，在这里控制分组头部视图的高度
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        return CGSize(width: SCREEN_WIDTH, height: 180)
+        return CGSize(width: Screen_Width, height: 180)
     }
     
     //返回分组脚部视图的尺寸，在这里控制分组脚部视图的高度
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         
-        return CGSize(width: SCREEN_WIDTH, height: 200)
+        return CGSize(width: Screen_Width, height: 200)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

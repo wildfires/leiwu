@@ -13,7 +13,7 @@ class ListViewCell: UITableViewCell {
 
     lazy var containerView: UIImageView = {
         let temp = UIImageView()
-        temp.backgroundColor = UIColor.whiteColor()
+        temp.backgroundColor = Color_White
         return temp
     }()
     
@@ -26,14 +26,14 @@ class ListViewCell: UITableViewCell {
     
     lazy var titleLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 14)
+        temp.font = UIFont(fontSize: 14)
         return temp
     }()
     
     lazy var subTitleLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 12)
-        temp.textColor = UIColor.grayColor()
+        temp.font = UIFont(fontSize: 12)
+        temp.textColor = Color_Gray
         return temp
     }()
     

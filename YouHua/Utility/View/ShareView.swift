@@ -40,7 +40,7 @@ class ShareView: UIView {
     lazy var titleLabel: UILabel = {
         let temp = UILabel()
         temp.text = "分享给好友"
-        temp.font = UIFont(name: FONT_NAME, size: 14)
+        temp.font = UIFont(fontSize: 14)
         temp.textAlignment = .Center
         return temp
     }()
@@ -48,8 +48,8 @@ class ShareView: UIView {
     lazy var cancelButton: UIButton = {
         let temp = UIButton()
         temp.setTitle("取消", forState: .Normal)
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 14)
-        temp.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        temp.titleLabel?.font = UIFont(fontSize: 14)
+        temp.setTitleColor(Color_Black, forState: .Normal)
         temp.addTarget(self, action: #selector(closeViewAction), forControlEvents: .TouchUpInside)
         temp.backgroundColor = RGBA(red: 244, green: 245, blue: 249, alpha: 1)
         return temp
@@ -57,7 +57,7 @@ class ShareView: UIView {
     
     lazy var shareBoxView: UIView = {
         let temp = UIView()
-        temp.backgroundColor = UIColor.whiteColor()
+        temp.backgroundColor = Color_White
         return temp
     }()
     
@@ -95,7 +95,7 @@ class ShareView: UIView {
             let btnX: CGFloat = CGFloat(index) * btnSize.width + CGFloat(currentCol) * btnMargin
             let btnY: CGFloat = 40 //CGFloat(currentRow) * (btnMargin + btnSize.height)
             
-            let shareBotton: UIButton = UIButton(image: sharePicArr[index] as? String, title: shareTitArr[index] as? String, size: CGSize(width: btnSize.width + btnMargin, height: btnSize.height), font: UIFont(name: FONT_NAME, size: 12), color: UIColor.blackColor())
+            let shareBotton: UIButton = UIButton(image: sharePicArr[index] as? String, title: shareTitArr[index] as? String, size: CGSize(width: btnSize.width + btnMargin, height: btnSize.height), font: UIFont(fontSize: 12), color: Color_Black)
             shareBotton.frame = CGRect(x: btnX, y: btnY, width: btnSize.width, height: btnSize.height)
             shareBoxView.addSubview(shareBotton)
         }

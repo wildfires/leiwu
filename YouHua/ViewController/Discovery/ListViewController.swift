@@ -16,7 +16,7 @@ class ListViewController: UIViewController, ListProtocol {
     let cellIdentifier = "cellid"
     
     lazy var tableView: UITableView = {
-        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
         temp.separatorStyle = .None
         return temp
     }()

@@ -45,8 +45,8 @@ class BannerView: UIView, UIScrollViewDelegate {
         pageControl = UIPageControl(frame: CGRect(x: 0, y: VIEW_HEIGHT - 30, width: VIEW_WIDTH, height: 30))
         pageControl.currentPage = 0
         pageControl.userInteractionEnabled = false //关闭交互
-        pageControl.currentPageIndicatorTintColor = UIColor.redColor()
-        pageControl.pageIndicatorTintColor = UIColor.grayColor()
+        pageControl.currentPageIndicatorTintColor = Color_Red
+        pageControl.pageIndicatorTintColor = Color_Gray
         
         self.addSubview(scrollView)
         self.addSubview(pageControl)
@@ -84,7 +84,7 @@ class BannerView: UIView, UIScrollViewDelegate {
                 
                 if let url: String = imageArray![index] {
                     //imageView.kf_setImageWithURL(NSURL(string: url)!)
-                    imageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: THUMB_IMG))
+                    imageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: Thumb_Picture))
                 }
             }
             
@@ -95,7 +95,7 @@ class BannerView: UIView, UIScrollViewDelegate {
             scrollView.addSubview(imageLeft)
             if let url: String = imageArray![count - 1] {
                 //imageLeft.kf_setImageWithURL(NSURL(string: url)!)
-                imageLeft.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: THUMB_IMG))
+                imageLeft.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: Thumb_Picture))
             }
             
             let imageRight: UIImageView = UIImageView(frame: CGRect(x: VIEW_WIDTH * CGFloat(count), y: 0, width: VIEW_WIDTH, height: VIEW_HEIGHT))
@@ -103,7 +103,7 @@ class BannerView: UIView, UIScrollViewDelegate {
             imageRight.clipsToBounds = true
             scrollView.addSubview(imageRight)
             if let url: String = imageArray![0] {
-                imageRight.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: THUMB_IMG))
+                imageRight.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: Thumb_Picture))
             }
             
             //设置滚动视图大小

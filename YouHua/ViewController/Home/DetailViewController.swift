@@ -37,7 +37,7 @@ class DetailViewController: UIViewController, DetailProtocol {
     }()
     
     lazy var followButton: UIButton = {
-        let temp = UIButton(image: "timeline_icon_retweet", title: "关注", font: UIFont(name: FONT_NAME, size: 12), color: UIColor.whiteColor())
+        let temp = UIButton(image: "timeline_icon_retweet", title: "关注", font: UIFont(fontSize: 12), color: UIColor.whiteColor())
         temp.frame = CGRect(x: 0, y: 7, width: 70, height: 30)
         temp.backgroundColor = RGBA(red: 22, green: 164, blue: 174, alpha: 1)
         temp.layer.cornerRadius = 2
@@ -170,7 +170,7 @@ class DetailViewController: UIViewController, DetailProtocol {
                         avatarView.headView.sd_setImageWithURL(NSURL(string: url))
                     }
                     avatarView.nickLabel.text = condata.nickname
-                    avatarView.dateLabel.text = String(condata.dateline)//.withDate
+                    avatarView.shortLabel.text = String(condata.dateline)//.withDate
                 }
                 
                 return cell
@@ -207,12 +207,12 @@ class DetailViewController: UIViewController, DetailProtocol {
         switch section {
             case 1:
                 
-                let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 40))
-                headerView.backgroundColor = UIColor.grayColor()
-                let titleLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 39.5))
-                titleLabel.backgroundColor = UIColor.whiteColor()
+                let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 40))
+                headerView.backgroundColor = Color_Gray
+                let titleLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 39.5))
+                titleLabel.backgroundColor = Color_White
                 titleLabel.text = "  评论列表 \(viewModel.cellNumberOfRows)"
-                titleLabel.font = UIFont(name: FONT_NAME, size: 14)
+                titleLabel.font = UIFont(fontSize: 14)
                 headerView.addSubview(titleLabel)
                 
                 return headerView

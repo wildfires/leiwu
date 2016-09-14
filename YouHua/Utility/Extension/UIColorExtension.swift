@@ -9,6 +9,14 @@
 import Foundation
 import UIKit
 
+extension UIFont {
+    
+    convenience init(fontSize: CGFloat) {
+        
+        self.init(name: Font_Name, size: fontSize)!
+    }
+}
+
 extension UIColor {
     
     /**
@@ -21,12 +29,16 @@ extension UIColor {
      
      - returns: 颜色
      */
-//    convenience init(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) {
-//        self.init(red: r/255.0, green: g/255.0, blue: b/255.0, alpha: alpha)
-//    }
-//    convenience init(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-//        self.init(red: red/255, green: green/255, blue: blue/255, alpha: alpha)
-//    }
+    
+    convenience init(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) {
+        
+        self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: alpha)
+    }
+    
+    convenience init(r: CGFloat, g: CGFloat, b: CGFloat) {
+        
+        self.init(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: 1)
+    }
 
 //    colorWithHex(hex: String, alpha: CGFloat = 1.0) -> UIColor {
 //    var rgb: CUnsignedInt = 0;

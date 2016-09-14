@@ -45,7 +45,7 @@ class MineReusableView: UICollectionReusableView {
     
     lazy var followAndEditButton: UIButton = {
         let temp = UIButton()
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 12)
+        temp.titleLabel?.font = UIFont(fontSize: 12)
         temp.setTitle("+ 关注", forState: .Normal)
         temp.setTitleColor(RGBA(red: 22, green: 163, blue: 95, alpha: 1), forState: .Normal)
         temp.layer.borderColor = RGBA(red: 22, green: 163, blue: 95, alpha: 1).CGColor
@@ -78,9 +78,9 @@ class MineReusableView: UICollectionReusableView {
     lazy var addressButton: UIButton = {
         let temp = UIButton()
         temp.setImage(UIImage(named: "compose_locatebutton_ready"), forState: .Normal)
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 12)
+        temp.titleLabel?.font = UIFont(fontSize: 12)
         //temp.setTitle("四川 成都", forState: .Normal)
-        temp.setTitleColor(UIColor.grayColor(), forState: .Normal)
+        temp.setTitleColor(Color_Gray, forState: .Normal)
         
         //temp.backgroundColor = UIColor.brownColor()
         return temp
@@ -88,7 +88,7 @@ class MineReusableView: UICollectionReusableView {
     //签名
     lazy var signLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 12)
+        temp.font = UIFont(fontSize: 12)
         temp.numberOfLines = 0
         //temp.setLineSpacing
         return temp
@@ -197,16 +197,16 @@ class mineBoxView: UIView {
     
     lazy var titleLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 10)
-        temp.textColor = UIColor.grayColor()
+        temp.font = UIFont(fontSize: 10)
+        temp.textColor = Color_Gray
         temp.textAlignment = .Center
         return temp
     }()
     
     lazy var numberLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 12)
-        temp.textColor = UIColor.blackColor()
+        temp.font = UIFont(fontSize: 12)
+        temp.textColor = Color_Black
         temp.textAlignment = .Center
         return temp
     }()

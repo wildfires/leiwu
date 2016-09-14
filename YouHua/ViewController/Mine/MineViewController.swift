@@ -21,7 +21,7 @@ class MineViewController: UIViewController, MineProtocol {
     var viewModel = MineViewModel()
     
     lazy var headView: UIImageView = {
-        let temp = UIImageView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 260))
+        let temp = UIImageView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 260))
         temp.contentMode = .ScaleAspectFill
         temp.clipsToBounds = true
         
@@ -32,17 +32,17 @@ class MineViewController: UIViewController, MineProtocol {
         //布局cell
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        flowLayout.itemSize = CGSize(width: (SCREEN_WIDTH - 2) / 3, height: (SCREEN_WIDTH - 2) / 3)
+        flowLayout.itemSize = CGSize(width: (Screen_Width - 2) / 3, height: (Screen_Width - 2) / 3)
         flowLayout.minimumInteritemSpacing = 1 //列间距
         flowLayout.minimumLineSpacing = 1 //行间距
         
-        let temp = UICollectionView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), collectionViewLayout: flowLayout)
+        let temp = UICollectionView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height), collectionViewLayout: flowLayout)
         temp.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 1)
         return temp
     }()
     
     lazy var composeButton: UIButton = {
-        let temp = UIButton(frame: CGRect(x: (SCREEN_WIDTH - 50) / 2, y: SCREEN_HEIGHT - 100, width: 50, height: 50))
+        let temp = UIButton(frame: CGRect(x: (Screen_Width - 50) / 2, y: Screen_Height - 100, width: 50, height: 50))
         temp.backgroundColor = UIColor.greenColor()
         temp.layer.cornerRadius = 25
         temp.layer.masksToBounds = true
@@ -154,7 +154,7 @@ class MineViewController: UIViewController, MineProtocol {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        return CGSize(width: SCREEN_WIDTH, height: 200)
+        return CGSize(width: Screen_Width, height: 200)
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -176,7 +176,7 @@ class MineViewController: UIViewController, MineProtocol {
                     headerView.followsView.numberLabel.text = "18"
                     headerView.fansView.numberLabel.text = "1.0k"
                     headerView.addressButton.setTitle("武汉 黄石市", forState: .Normal)
-                    headerView.signLabel.attributedText = "有花,就是我一直寻找的东西。".stringWithParagraphlineSpeace(6, color: UIColor.greenColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+                    headerView.signLabel.attributedText = "有花,就是我一直寻找的东西。".stringWithParagraphlineSpeace(6, color: UIColor.greenColor(), font: UIFont(fontSize: 14))
                 } else {
                     headerView.followAndEditButton.setTitle("编辑个人资料", forState: .Normal)
                     headerView.followAndEditButton.addTarget(self, action: #selector(basicAction), forControlEvents: .TouchUpInside)
@@ -188,7 +188,7 @@ class MineViewController: UIViewController, MineProtocol {
                     headerView.followsView.numberLabel.text = "198"
                     headerView.fansView.numberLabel.text = "1.6k"
                     headerView.addressButton.setTitle("北京 朝阳区", forState: .Normal)
-                    headerView.signLabel.attributedText = "精选,分享,讨论是我们的建站使命。在这里你可以最短的时间收集灵感,寻找有趣的东西。".stringWithParagraphlineSpeace(6, color: UIColor.greenColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+                    headerView.signLabel.attributedText = "精选,分享,讨论是我们的建站使命。在这里你可以最短的时间收集灵感,寻找有趣的东西。".stringWithParagraphlineSpeace(6, color: UIColor.greenColor(), font: UIFont(fontSize: 14))
                 }
                 //传入不同数组给数据
                 

@@ -23,7 +23,7 @@ class TestViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationItem.title = "当前城市－成都"
         setNavigationItem(title: "X", selector: #selector(backViewAction), isRight: false)
         
-        citysTableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+        citysTableView = UITableView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
         self.view.addSubview(citysTableView)
         citysTableView.dataSource = self
         citysTableView.delegate = self

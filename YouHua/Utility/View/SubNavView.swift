@@ -54,7 +54,7 @@ class SubNavView: UIView {
             let btnX: CGFloat = CGFloat(currentCol) * (menuSize.width + menuMargin)
             let btnY: CGFloat = 10 //CGFloat(currentRow) * (menuMargin + menuSize.height)
             
-            let menuBotton: UIButton = UIButton(image: menuPicArr[index] as? String, title: menuTitArr[index] as? String, size: CGSize(width: menuSize.width + menuMargin, height: menuSize.height), font: UIFont(name: FONT_NAME, size: 12), color: UIColor.blackColor())
+            let menuBotton: UIButton = UIButton(image: menuPicArr[index] as? String, title: menuTitArr[index] as? String, size: CGSize(width: menuSize.width + menuMargin, height: menuSize.height), font: UIFont(fontSize: 12), color: Color_Black)
             menuBotton.frame = CGRect(x: btnX, y: btnY, width: menuSize.width, height: menuSize.height)
             menuBotton.addTarget(self, action: #selector(clickMenuAction(_:)), forControlEvents: .TouchUpInside)
             menuBotton.tag = 200 + index

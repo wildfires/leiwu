@@ -21,7 +21,7 @@ extension UIViewController {
             item = UIBarButtonItem(title: title, style: .Plain, target: self, action: selector)
             //item.tintColor = UIColor.grayColor()
             let color: UIColor = UIColor.grayColor()
-            let font: UIFont = UIFont(name: FONT_NAME, size: 14)!
+            let font: UIFont = UIFont(name: Font_Name, size: 14)!
             item.setTitleTextAttributes([NSForegroundColorAttributeName: color, NSFontAttributeName: font], forState: .Normal)
         }
         

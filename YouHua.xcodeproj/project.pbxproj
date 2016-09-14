@@ -59,7 +59,7 @@
 		C36C53AD1D7527F1001A8ED2 /* MallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36C53AC1D7527F1001A8ED2 /* MallViewController.swift */; };
 		C37741D01D683D79001891C2 /* CommentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37741CF1D683D79001891C2 /* CommentViewCell.swift */; };
 		C37741D21D683EF1001891C2 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37741D11D683EF1001891C2 /* AvatarView.swift */; };
-		C3A130B41D6980C300384248 /* HomeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A130B31D6980C300384248 /* HomeCellView.swift */; };
+		C3A130B41D6980C300384248 /* HomeCellContView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A130B31D6980C300384248 /* HomeCellContView.swift */; };
 		C3A130B61D69901700384248 /* CommentTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A130B51D69901700384248 /* CommentTopCell.swift */; };
 		C3FB0F1D1D4DDBDF0017461E /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FB0F1C1D4DDBDF0017461E /* VideoView.swift */; };
 		C3FE38A51D4218F600E4AA2D /* MineViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FE38A41D4218F600E4AA2D /* MineViewCell.swift */; };
@@ -268,7 +268,7 @@
 		C36C53AC1D7527F1001A8ED2 /* MallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MallViewController.swift; sourceTree = "<group>"; };
 		C37741CF1D683D79001891C2 /* CommentViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewCell.swift; sourceTree = "<group>"; };
 		C37741D11D683EF1001891C2 /* AvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
-		C3A130B31D6980C300384248 /* HomeCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCellView.swift; sourceTree = "<group>"; };
+		C3A130B31D6980C300384248 /* HomeCellContView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCellContView.swift; sourceTree = "<group>"; };
 		C3A130B51D69901700384248 /* CommentTopCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTopCell.swift; sourceTree = "<group>"; };
 		C3FB0F1C1D4DDBDF0017461E /* VideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		C3FE38A41D4218F600E4AA2D /* MineViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineViewCell.swift; sourceTree = "<group>"; };
@@ -659,7 +659,7 @@
 			children = (
 				C3427D981D1BDAFA00251E72 /* BannerView.swift */,
 				C37741D11D683EF1001891C2 /* AvatarView.swift */,
-				C3A130B31D6980C300384248 /* HomeCellView.swift */,
+				C3A130B31D6980C300384248 /* HomeCellContView.swift */,
 				C34B6CD21D2640C300E36A00 /* PictureView.swift */,
 				C3FFE5CA1D23BFA4005DC097 /* ChatBarView.swift */,
 				C30E2C0E1D2DF24500C38029 /* DetailBarView.swift */,
@@ -1149,7 +1149,7 @@
 				C3FEB5F51D1FD98B005BD6ED /* StringExtension.swift in Sources */,
 				C3427D7C1D1B8A0A00251E72 /* WFDefine.swift in Sources */,
 				C3FFE5CB1D23BFA4005DC097 /* ChatBarView.swift in Sources */,
-				C3A130B41D6980C300384248 /* HomeCellView.swift in Sources */,
+				C3A130B41D6980C300384248 /* HomeCellContView.swift in Sources */,
 				C3427D421D1B86F000251E72 /* AppDelegate.swift in Sources */,
 				C3FF29511D1D11D90048F953 /* FindViewController.swift in Sources */,
 				C36C53AB1D75230C001A8ED2 /* WFTableViewModel.swift in Sources */,

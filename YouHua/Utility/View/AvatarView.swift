@@ -32,15 +32,26 @@ class AvatarView: UIView {
     
     lazy var nickLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 13)
-        temp.textColor = RGBA(red: 22, green: 164, blue: 174, alpha: 1)
+        temp.font = UIFont(fontSize: 14)
+        temp.textColor = RGBA(red: 102, green: 102, blue: 102, alpha: 1)
         return temp
     }()
     
-    lazy var dateLabel: UILabel = {
+    lazy var shortLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 11)
-        temp.textColor = UIColor.grayColor()
+        temp.font = UIFont(fontSize: 14)
+        temp.textColor = RGBA(red: 167, green: 167, blue: 167, alpha: 1)
+        return temp
+    }()
+    
+    lazy var followButton: UIButton = {
+        let temp = UIButton(image: "follow_icon_retweet", title: "关注", font: UIFont(fontSize: 12), color: Color_White)
+        //temp.frame = CGRect(x: 0, y: 7, width: 70, height: 30) timeline_icon_retweet
+        temp.layer.borderWidth = 1
+        temp.layer.borderColor = RGBA(red: 102, green: 102, blue: 102, alpha: 1).CGColor
+        temp.layer.cornerRadius = 3
+        temp.layer.masksToBounds = true
+        temp.setTitleColor(RGBA(red: 102, green: 102, blue: 102, alpha: 1), forState: .Normal)
         return temp
     }()
     
@@ -59,9 +70,11 @@ class AvatarView: UIView {
     
     func initView(avatarSize: AvatarSize, boxSize: CGFloat) {
         
+        self.backgroundColor = Color_White
         self.addSubview(headView)
         self.addSubview(nickLabel)
-        self.addSubview(dateLabel)
+        self.addSubview(shortLabel)
+        
         headView.layer.cornerRadius = boxSize / 2
         
         weak var weakSelf: AvatarView? = self
@@ -73,26 +86,32 @@ class AvatarView: UIView {
         switch avatarSize {
             case .Large:
                 
+                self.addSubview(followButton)
                 nickLabel.snp_makeConstraints { (make) in
                     make.top.equalTo(headView.snp_top).offset(0)
-                    make.left.equalTo(headView.snp_right).offset(8)
+                    make.left.equalTo(headView.snp_right).offset(Margin_Width)
                     make.height.equalTo(boxSize / 2)
                 }
-                dateLabel.snp_makeConstraints { (make) in
-                    make.left.equalTo(headView.snp_right).offset(8)
+                shortLabel.snp_makeConstraints { (make) in
+                    make.left.equalTo(headView.snp_right).offset(Margin_Width)
                     make.bottom.equalTo(headView.snp_bottom).offset(0)
-                    make.height.equalTo(boxSize / 2)
+                    make.height.equalTo(boxSize / 2 - 2)
+                }
+                followButton.snp_makeConstraints { (make) in
+                    make.top.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(4, 0, 0, 0))
+                    make.width.equalTo(60)
+                    make.height.equalTo(boxSize - 8)
                 }
             case .Small:
                 
                 nickLabel.snp_makeConstraints { (make) in
                     make.top.equalTo(weakSelf!).offset(0)
-                    make.left.equalTo(headView.snp_right).offset(8)
+                    make.left.equalTo(headView.snp_right).offset(Margin_Width)
                     make.height.equalTo(boxSize)
                 }
-                dateLabel.snp_makeConstraints { (make) in
+                shortLabel.snp_makeConstraints { (make) in
                     make.top.equalTo(weakSelf!).offset(3)
-                    make.left.equalTo(nickLabel.snp_right).offset(4)
+                    make.left.equalTo(nickLabel.snp_right).offset(Margin_Width)
                     make.height.equalTo(boxSize - 3)
                 }
         }
@@ -112,5 +131,17 @@ class AvatarView: UIView {
             return
         }
         delegate.avatarView(didSelectedAvatarAtIndex: view.tag)
+    }
+    
+    override func drawRect(rect: CGRect) {
+
+        let context: CGContextRef = UIGraphicsGetCurrentContext()! //获得处理的上下文
+        CGContextSetLineCap(context, .Square) //指定直线样式
+        CGContextSetLineWidth(context, 0.5) //直线宽度
+        CGContextSetRGBStrokeColor(context, 208/255, 208/255, 208/255, 1) //线的颜色
+        CGContextBeginPath(context)//开始绘制
+        CGContextMoveToPoint(context, 0, rect.size.height)//起点坐标
+        CGContextAddLineToPoint(context, rect.size.width, rect.size.height)//终点坐标
+        CGContextStrokePath(context)//绘制完成
     }
 }

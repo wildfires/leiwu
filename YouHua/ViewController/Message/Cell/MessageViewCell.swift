@@ -23,22 +23,22 @@ class MessageViewCell: UITableViewCell {
     
     lazy var nickNameLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 14)
+        temp.font = UIFont(fontSize: 14)
         return temp
     }()
     
     lazy var digestLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 12)
-        temp.textColor = UIColor.grayColor()
+        temp.font = UIFont(fontSize: 12)
+        temp.textColor = Color_Gray
         return temp
     }()
     
     lazy var dateLabel: UILabel = {
         let temp = UILabel()
         //temp.textAlignment = .Right
-        temp.font = UIFont(name: FONT_NAME, size: 12)
-        temp.textColor = UIColor.grayColor()
+        temp.font = UIFont(fontSize: 12)
+        temp.textColor = Color_Gray
         return temp
     }()
     

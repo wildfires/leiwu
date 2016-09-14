@@ -12,17 +12,7 @@ import SDWebImage
 
 class HomeViewCell: UITableViewCell, WFRichText {
     
-//    var cellData: HomeModel? {
-//        didSet {
-//            let url = concern!.avatar_url!
-//            titleImageView.kf_setImageWithURL(NSURL(string: url)!)
-//            titleLabel.text = concern!.name
-//            peopleCountLabel.text = "\(concern!.concern_count)人关心"
-//            peopleCountLabel.hidden = Bool(concern!.concern_count) ? false : true
-//            commentCountLabel.text = "\(concern!.discuss_count)条评论"
-//            commentCountLabel.hidden = Bool(concern!.discuss_count) ? false : true
-//        }
-//    }
+    var rowHeight: CGFloat = 0
     
     lazy var containerView: UIImageView = {
         let temp = UIImageView()
@@ -32,11 +22,18 @@ class HomeViewCell: UITableViewCell, WFRichText {
 
     lazy var avatarView: AvatarView = {
         let temp = AvatarView()
+        temp.initView(AvatarSize.Large, boxSize: 36) //设置头像大小
         return temp
     }()
     
-    lazy var homeCellView: HomeCellView = {
-        let temp = HomeCellView()
+    lazy var homeCellContView: HomeCellContView = {
+        let temp = HomeCellContView()
+        return temp
+    }()
+    
+    lazy var homeCellBarView: HomeCellBarView = {
+        let temp = HomeCellBarView()
+        //temp.backgroundColor = UIColor.grayColor()
         return temp
     }()
 
@@ -67,80 +64,82 @@ class HomeViewCell: UITableViewCell, WFRichText {
             view.removeFromSuperview()
         }
         
-        avatarView.initView(AvatarSize.Large, boxSize: 36)
-        
         self.contentView.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 1)
-        
+        self.contentView.addSubview(containerView)
+        self.containerView.addSubview(avatarView)
+        self.containerView.addSubview(homeCellContView)
+        self.containerView.addSubview(homeCellBarView)
         //取消cell点击效果
         self.selectionStyle = .None
         //打开交互
         self.containerView.userInteractionEnabled = true
         
-        //pictureView?.delegate = self
-        
-        //根据图片个数确定view高度
-        //pictureView = PictureView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH - 36, height: SCREEN_WIDTH - 36))
-        
-        self.contentView.addSubview(containerView)
-        
-        self.containerView.addSubview(avatarView)
-        
-        //内容
-        self.containerView.addSubview(homeCellView)
-        
         weak var weakSelf: HomeViewCell? = self
         containerView.snp_makeConstraints { (make) in
-            make.edges.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(0, 0, 16, 0))
+            make.edges.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(0, 0, Margin_Height, 0))
         }
         
         avatarView.snp_makeConstraints { (make) in
-            make.top.left.right.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(8, 8, 0, 8))
-            make.height.equalTo(36)
+            make.top.left.right.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(Margin_Height / 2, Margin_Width, 0, Margin_Width))
+            make.height.equalTo(36 + Margin_Height / 2) //头像高度 36 头像内底部间距 MARGIN
         }
         
-        homeCellView.snp_makeConstraints { (make) in
-            make.top.equalTo(avatarView.snp_bottom).offset(8)
-            make.left.right.bottom.equalTo(weakSelf!.containerView).inset(UIEdgeInsetsMake(0, 0, 12, 0))
+        homeCellContView.snp_makeConstraints { (make) in
+            make.top.equalTo(avatarView.snp_bottom).offset(Margin_Height)
+            make.left.right.equalTo(weakSelf!.containerView).inset(UIEdgeInsetsMake(0, 0, 0, 0))
+        }
+        
+        homeCellBarView.snp_makeConstraints { (make) in
+            make.top.equalTo(homeCellContView.snp_bottom).offset(Margin_Height)
+            make.left.bottom.right.equalTo(weakSelf!.containerView).inset(UIEdgeInsetsMake(0, Margin_Width, 0, Margin_Width))
+            make.height.equalTo(30) //不设置size会没有点击效果 26 + MARGIN
         }
     }
     
     func rowHeight(body: String) -> CGFloat {
         
         //图片高度 文字高度
-        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(name: FONT_NAME, size: 14)!, width: SCREEN_WIDTH - 16) // 50 + 16//body.sizeWithFont(UIFont(name: FONT_NAME, size: 16)!, maxSize: 16).height
-        //print(pictureHight) 头像36 图片200 评论26 内容？ 246 + 36 + 16 + 16 //326
-        return 326 + textHight
+        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(fontSize: 14), width: Screen_Width - 2 * Margin_Width)
+        //Margin_Height/2 + 头像36 + Margin_Height/2 + 内容？+ Margin_Height + 图片200 + Margin_Height + 工具栏30 + Margin_Height + Margin_Height
+        return 266 + textHight + 5 * Margin_Height
     }
     
     func configureCell(model: HomeModel, indexPath: NSIndexPath) {
         
         let row: Int = indexPath.row
         
+        self.rowHeight = self.rowHeight(model.content!)
+        
         if model.type == "video" {
-            homeCellView.playButton.hidden = false
-            homeCellView.playButton.tag = row
-            homeCellView.numberLabel.text = "00:10"
+            homeCellContView.playButton.hidden = false
+            homeCellContView.playButton.tag = row
+            homeCellContView.numberLabel.text = "00:10"
         } else {
-            homeCellView.playButton.hidden = true
-            homeCellView.numberLabel.text = "\(model.photo!) 张图"
+            homeCellContView.playButton.hidden = true
+            homeCellContView.numberLabel.text = "\(model.photo!) 张图"
         }
         if let url: String = model.avatar {
             avatarView.headView.sd_setImageWithURL(NSURL(string: url))
         }
         if let url: String = model.cover {
-            homeCellView.coverView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: THUMB_IMG))
+            homeCellContView.coverView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: Thumb_Picture))
         }
-        avatarView.nickLabel.text = model.nickname!
-        avatarView.dateLabel.text = model.dateline!.withDate
-        homeCellView.barView.praiseButton.setTitle(model.likes!.withCount, forState: .Normal)
-        homeCellView.barView.discussButton.setTitle(model.comments!.withCount, forState: .Normal)
-        homeCellView.digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+        avatarView.nickLabel.text = "三杯茶茶"//model.nickname!
+        avatarView.shortLabel.text = "耒物工作室创始人"//model.dateline!.withDate
+        
+        homeCellContView.digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: Color_Tags, font: UIFont(fontSize: 14))
+        
+        homeCellBarView.praiseButton.setTitle(model.likes!.withCount, forState: .Normal)
+        homeCellBarView.discussButton.setTitle(model.comments!.withCount, forState: .Normal)
+        homeCellBarView.dateButton.setTitle("5分钟前", forState: .Normal)
+        //homeCellView.barView.dateLabel.text = "5分钟前"
+        //homeCellView.barView.backgroundColor = UIColor.grayColor()
         
         avatarView.headView.tag = row
         avatarView.nickLabel.tag = row
-        homeCellView.barView.rowId = row
-        homeCellView.barView.praiseButton.tag = row + 1
-        homeCellView.barView.discussButton.tag = row + 2
-        homeCellView.barView.shareButton.tag = row + 3
+        homeCellBarView.rowId = row
+        homeCellBarView.praiseButton.tag = row + 1
+        homeCellBarView.discussButton.tag = row + 2
+        homeCellBarView.shareButton.tag = row + 3
     }
 }

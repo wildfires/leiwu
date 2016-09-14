@@ -36,7 +36,7 @@ extension WFRichText {
                 let tempStr = NSMutableAttributedString(string: str)
                 
                 //tempStr.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(), range: NSMakeRange(0, str.characters.count))
-                tempStr.addAttributes([NSFontAttributeName: UIFont(name: FONT_NAME, size: 12)!, NSForegroundColorAttributeName: UIColor.blackColor()], range: NSMakeRange(0, str.characters.count))
+                tempStr.addAttributes([NSFontAttributeName: UIFont(fontSize: 12), NSForegroundColorAttributeName: Color_Tags], range: NSMakeRange(0, str.characters.count))
                 body.replaceCharactersInRange(checkingRes.range, withAttributedString: tempStr)
             }
             
@@ -52,7 +52,7 @@ extension WFRichText {
                     let tempStr = NSMutableAttributedString(string: str)
                     tempStr.forwardingTargetForSelector(#selector(HomeViewModel.clemoji))
                     //tempStr.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(), range: NSMakeRange(0, str.characters.count))
-                    tempStr.addAttributes([NSFontAttributeName: UIFont(name: FONT_NAME, size: 12)!, NSForegroundColorAttributeName: UIColor.blackColor()], range: NSMakeRange(0, str.characters.count))
+                    tempStr.addAttributes([NSFontAttributeName: UIFont(fontSize: 12), NSForegroundColorAttributeName: Color_Tags], range: NSMakeRange(0, str.characters.count))
                     body.replaceCharactersInRange(checkingRes.range, withAttributedString: tempStr)
                 }
                 

@@ -25,7 +25,7 @@ class CateViewCell: UICollectionViewCell {
         //temp.text = "兰花"
         //temp.textColor = UIColor.whiteColor()
         temp.textAlignment = .Center
-        temp.font = UIFont(name: FONT_NAME, size: 12)
+        temp.font = UIFont(fontSize: 12)
         temp.backgroundColor = RGBA(red: 250, green: 250, blue: 250, alpha: 1)
         return temp
     }()

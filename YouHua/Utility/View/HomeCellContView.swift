@@ -1,5 +1,5 @@
 //
-//  HomeCellView.swift
+//  HomeCellContView.swift
 //  YouHua
 //
 //  Created by 高洋 on 16/8/21.
@@ -8,15 +8,23 @@
 
 import UIKit
 
-protocol HomeCellViewDelegate: NSObjectProtocol {
-    func homeCellView(cell: HomeCellView, didSelectedVideoAtIndex row: Int)
+protocol HomeCellContViewDelegate: NSObjectProtocol {
+    func homeCellContView(cell: HomeCellContView, didSelectedVideoAtIndex row: Int)
 }
 
-class HomeCellView: UIView {
+class HomeCellContView: UIView {
 
-    weak var delegate: HomeCellViewDelegate!
+    weak var delegate: HomeCellContViewDelegate!
     var VIEW_WIDTH: CGFloat = 0
     var VIEW_HEIGHT: CGFloat = 0
+    
+    lazy var digestLabel: UILabel = {
+        let temp = UILabel()
+        //temp.font = UIFont(name: FONT_NAME, size: 14)
+        temp.numberOfLines = 0
+        //temp.setLineSpacing
+        return temp
+    }()
     
     lazy var coverView: UIImageView = {
         let temp = UIImageView()
@@ -31,38 +39,24 @@ class HomeCellView: UIView {
         return temp
     }()
     
-    var playButton: UIButton = {
+    lazy var playButton: UIButton = {
         let temp = UIButton()
         temp.setImage(UIImage(named: "player_play"), forState: .Normal)
         temp.layer.borderColor = RGBA(red: 0, green: 0, blue: 0, alpha: 0.5).CGColor
         temp.layer.borderWidth = 1
         temp.layer.cornerRadius = 25
         temp.layer.masksToBounds = true
-        //temp.addTarget(self, action: #selector(playVide(_:)), forControlEvents: .TouchUpInside)
+        temp.addTarget(self, action: #selector(playVideo(_:)), forControlEvents: .TouchUpInside)
         temp.hidden = true
         return temp
     }()//播放按钮
     
     lazy var numberLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 12)
-        temp.textColor = UIColor.whiteColor()
+        temp.font = UIFont(fontSize: 12)
+        temp.textColor = Color_White
         temp.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         temp.textAlignment = .Center
-        return temp
-    }()
-    
-    lazy var barView: HomeCellBarView = {
-        let temp = HomeCellBarView()
-        temp.backgroundColor = UIColor.whiteColor()
-        return temp
-    }()
-    
-    lazy var digestLabel: UILabel = {
-        let temp = UILabel()
-        //temp.font = UIFont(name: FONT_NAME, size: 14)
-        temp.numberOfLines = 0
-        //temp.setLineSpacing
         return temp
     }()
     
@@ -81,21 +75,26 @@ class HomeCellView: UIView {
     
     func initView() {
         
+        self.addSubview(digestLabel)
         self.addSubview(coverView)
         self.addSubview(videoView)
         self.addSubview(playButton)
         self.addSubview(numberLabel)
-        self.addSubview(digestLabel)
-        self.addSubview(barView)
         
-        weak var weakSelf: HomeCellView? = self
+        weak var weakSelf: HomeCellContView? = self
+        digestLabel.snp_makeConstraints { (make) in
+            make.top.left.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, Margin_Width, 0, Margin_Width))
+            //make.left.bottom.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, 8, 0, 8)) //UIEdgeInsetsMake(0, 8, 12, 8))
+        }
+        
         coverView.snp_makeConstraints { (make) in
-            make.top.left.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, 0, 0, 0))
+            make.top.equalTo(digestLabel.snp_bottom).offset(Margin_Width)
+            make.left.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, Margin_Width, 0, Margin_Width))
             make.height.equalTo(200)
         }
         
         videoView.snp_makeConstraints { (make) in
-            make.top.left.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, 0, 0, 0))
+            make.top.left.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, Margin_Width, 0, Margin_Width))
             make.height.equalTo(200)
         }
         
@@ -108,25 +107,12 @@ class HomeCellView: UIView {
             make.bottom.right.equalTo(coverView).inset(UIEdgeInsetsMake(0, 0, 0, 0))
             make.size.equalTo(CGSize(width: 45, height: 25))
         }
-        
-        barView.snp_makeConstraints { (make) in
-            make.top.equalTo(coverView.snp_bottom).offset(0)
-            make.left.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, 8, 0, 8))
-            make.height.equalTo(34)//不设置size会没有点击效果 26 + 8 
-        }
-        
-        digestLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(barView.snp_bottom).offset(12)
-            make.left.bottom.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(0, 8, 0, 8)) //UIEdgeInsetsMake(0, 8, 12, 8))
-        }
-        
-        playButton.addTarget(self, action: #selector(playVideo(_:)), forControlEvents: .TouchUpInside)
     }
     
     func playVideo(button: UIButton) {
         
         if delegate != nil {
-            delegate.homeCellView(self, didSelectedVideoAtIndex: button.tag)
+            delegate.homeCellContView(self, didSelectedVideoAtIndex: button.tag)
         }
     }
 }

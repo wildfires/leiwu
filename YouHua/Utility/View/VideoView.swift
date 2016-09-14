@@ -59,7 +59,7 @@ class VideoView: UIView {
     }()//全屏按钮
     var timeLabel: UILabel = {
         let temp = UILabel()
-        temp.font = UIFont(name: FONT_NAME, size: 8)
+        temp.font = UIFont(fontSize: 8)
         temp.textColor = UIColor.whiteColor()
         //temp.text = "0:00:00/0:00:00"
         return temp
@@ -219,7 +219,7 @@ class VideoView: UIView {
         videoViewSwitchOrientation(button.selected)
         if button.selected {
             
-//            self.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
+//            self.frame = CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height)
 //            //self.layoutIfNeeded()
 //            playerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
             fullButton.setImage(UIImage(named: "mini_screen"), forState: .Normal)
@@ -281,10 +281,10 @@ class VideoView: UIView {
         
         //self.currentPlayerLayer.transform = CATransform3DMakeRotation(M_PI/2, 0, 0, 1);
         //self.currentPlayerLayer.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-        self.layer.frame = CGRect(x: 0, y: 0, width: SCREEN_HEIGHT, height: SCREEN_WIDTH)
+        self.layer.frame = CGRect(x: 0, y: 0, width: Screen_Height, height: Screen_Width)
         self.playerLayer?.transform = CATransform3DMakeRotation(CGFloat(M_PI) / 2, 0, 0, 1)
         
-        self.playerLayer?.frame = CGRect(x: 0, y: 0, width: SCREEN_HEIGHT, height: SCREEN_WIDTH)
+        self.playerLayer?.frame = CGRect(x: 0, y: 0, width: Screen_Height, height: Screen_Width)
         
         self.playerLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
         self.backgroundColor = UIColor.blueColor()

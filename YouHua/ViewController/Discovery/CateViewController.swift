@@ -19,12 +19,12 @@ class CateViewController: UIViewController, CateProtocol {
         //布局对象
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5)
-        flowLayout.itemSize = CGSize(width: (SCREEN_WIDTH - 20) / 3, height: (SCREEN_WIDTH - 20) / 3 + 30)
+        flowLayout.itemSize = CGSize(width: (Screen_Width - 20) / 3, height: (Screen_Width - 20) / 3 + 30)
         flowLayout.minimumInteritemSpacing = 5 //列间距
         flowLayout.minimumLineSpacing = 5 //行间距
         
-        let temp = UICollectionView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), collectionViewLayout: flowLayout)
-        temp.backgroundColor = UIColor.whiteColor()
+        let temp = UICollectionView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height), collectionViewLayout: flowLayout)
+        temp.backgroundColor = Color_White
         return temp
     }()
     
@@ -75,9 +75,9 @@ class CateViewController: UIViewController, CateProtocol {
             
             let header: UICollectionReusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "header", forIndexPath: indexPath)
             header.backgroundColor = RGBA(red: 248, green: 248, blue: 248, alpha: 1)
-            let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 30))
+            let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 30))
             titleLabel.text = " 植物种类"
-            titleLabel.font = UIFont(name: FONT_NAME, size: 14)
+            titleLabel.font = UIFont(fontSize: 14)
             header.addSubview(titleLabel)
             
             return header
@@ -85,10 +85,10 @@ class CateViewController: UIViewController, CateProtocol {
             
             let footer: UICollectionReusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "footer", forIndexPath: indexPath)
             footer.backgroundColor = RGBA(red: 225, green: 225, blue: 225, alpha: 1)
-            let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 20))
+            let titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 20))
             titleLabel.text = "更多"
             titleLabel.textAlignment = .Center
-            titleLabel.font = UIFont(name: FONT_NAME, size: 12)
+            titleLabel.font = UIFont(fontSize: 12)
             footer.addSubview(titleLabel)
             
             return footer
@@ -99,13 +99,13 @@ class CateViewController: UIViewController, CateProtocol {
     //返回分组的头部视图的尺寸，在这里控制分组头部视图的高度
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         
-        return CGSize(width: SCREEN_WIDTH, height: 30)
+        return CGSize(width: Screen_Width, height: 30)
     }
     
     //返回分组脚部视图的尺寸，在这里控制分组脚部视图的高度
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         
-        return CGSize(width: SCREEN_WIDTH, height: 20)
+        return CGSize(width: Screen_Width, height: 20)
     }
     //item的大小
     

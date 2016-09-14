@@ -16,26 +16,25 @@ class FindViewModel: NSObject {
     
     func networkRequestData(finished: HomeViewModelFinished) {
         
-        var parameters: [String: AnyObject]
-        
-        parameters = [
+        let params: [String: AnyObject] = [
             "act": "banner"
         ]
         
-        WFNetwork.shareNetwork.WFGet(banner_url, parameters: parameters) { (success, result, error) in
+        
+        WFNetwork.shareNetwork.WFGET(banner_url, parameters: params) { (success, result, error) in
             
-            guard let result = result where result["code"] == 200 else {
+            guard let result = result where success == true else {
                 
-                print(success, error, parameters)
+                print(success, error, params)
                 finished(success: false)
                 return
             }
             
-            let tempArray = result["data"].arrayObject as! [[String : AnyObject]]
-                
-//                for dict in tempArray {
-//                    self.bannerArray.append(FindModel(dict: dict as! [String : AnyObject]))
-//                }
+            let tempArray = result.arrayObject as! [[String : AnyObject]]
+            
+            //                for dict in tempArray {
+            //                    self.bannerArray.append(FindModel(dict: dict as! [String : AnyObject]))
+            //                }
             
             let AdArray = tempArray.map({ (AD) -> String in
                 
@@ -43,7 +42,6 @@ class FindViewModel: NSObject {
             })
             self.bannerArray = AdArray
             finished(success: true)
-            
         }
     }
     

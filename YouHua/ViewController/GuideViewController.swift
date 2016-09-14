@@ -13,12 +13,12 @@ class GuideViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let openButton = UIButton(frame: CGRect(x: (SCREEN_WIDTH - 100) / 2, y: (SCREEN_HEIGHT - 50) / 2, width: 100, height: 50))
+        let openButton = UIButton(frame: CGRect(x: (Screen_Width - 100) / 2, y: (Screen_Height - 50) / 2, width: 100, height: 50))
         openButton.setTitle("打开app", forState: .Normal)
-        openButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        openButton.addTarget(self, action: #selector(loginAct), forControlEvents: .TouchUpInside)
+        openButton.setTitleColor(Color_Black, forState: .Normal)
+        openButton.addTarget(self, action: #selector(openMain), forControlEvents: .TouchUpInside)
         openButton.layer.borderWidth = 0.5
-        openButton.layer.borderColor = UIColor.blackColor().CGColor
+        openButton.layer.borderColor = Color_Black.CGColor
         self.view.addSubview(openButton)
     }
 
@@ -30,7 +30,7 @@ class GuideViewController: UIViewController {
     func loginAct() {
     
         let loginVC = LoginAndRegController()
-        loginVC.loginViewAction()
+        loginVC.initView(LoginRegViewType.Login)
         presentViewController(loginVC, animated: true, completion: nil)
     }
     

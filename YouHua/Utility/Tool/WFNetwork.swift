@@ -9,20 +9,10 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import MJRefresh
-
 
 //网络请求回调
 typealias WFNetworkFinished = (success: Bool, result: JSON?, error: NSError?) -> ()
 
-//protocol WFNetwork: NSObjectProtocol, WFProgress {
-//    //var complete = (result: JSON?) -> ()
-//    ///func WFGet(url: String, parameters: [String : AnyObject]?, finished: (result: JSON?) -> ())
-//    
-//    //func WFRequest(method: Method, url: String, parameters: [String : AnyObject]?, finished: (result: JSON?) -> ())
-//    
-//    ///func WFUpload(url: String, formData: MultipartFormData, finished: (result: JSON?) -> ())
-//}
 class WFNetwork: NSObject, WFProgress {
     
     //单例
@@ -37,13 +27,23 @@ class WFNetwork: NSObject, WFProgress {
             
             switch response.result {
                 
-                case let .Success(data):
+                case let .Success(value):
                     
-                    let json = JSON(data)
-                    finished(success: true, result: json, error: nil)
+                    let json = JSON(value)
+                    let data = json["data"]
+                    let code = json["code"].intValue
+                    let info = json["info"].stringValue
+                    
+                    guard code == Code_Success else {
+                        self.WFShowHUD(info, status: WFStatusHUD.Failure)
+                        finished(success: false, result: nil, error: nil)
+                        return
+                    }
+                    
+                    finished(success: true, result: data, error: nil)
                 case .Failure:
                     
-                    print("网络不给力啊")
+                    self.WFShowHUD("加载失败...", status: WFStatusHUD.Failure)
                     finished(success: false, result: nil, error: response.result.error)
             }
         }
@@ -57,13 +57,23 @@ class WFNetwork: NSObject, WFProgress {
             
             switch response.result {
                 
-                case let .Success(data):
+                case let .Success(value):
                     
-                    let json = JSON(data)
-                    finished(success: true, result: json, error: nil)
+                    let json = JSON(value)
+                    let data = json["data"]
+                    let code = json["code"].intValue
+                    let info = json["info"].stringValue
+                    
+                    guard code == Code_Success else {
+                        self.WFShowHUD(info, status: WFStatusHUD.Failure)
+                        finished(success: false, result: nil, error: nil)
+                        return
+                    }
+                    
+                    finished(success: true, result: data, error: nil)
                 case .Failure:
                     
-                    print("网络不给力啊")
+                    self.WFShowHUD("加载失败...", status: WFStatusHUD.Failure)
                     finished(success: false, result: nil, error: response.result.error)
             }
         }
@@ -73,83 +83,83 @@ class WFNetwork: NSObject, WFProgress {
     
 //  MARK: - 首页
     //首页下拉刷新
-    func homeLoadNewData(tableView: UITableView, finished: (result: [HomeModel]) -> ()) {
-        
-        weak var weakSelf: WFNetwork? = self
-        tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
-            
-            let params: [String: AnyObject] = [
-                "page": 0
-            ]
-            
-            weakSelf!.WFGET(home_url, parameters: params, finished: { (success, result, error) in
-                
-                tableView.mj_header.endRefreshing()
-                guard let result = result else {
-                    return
-                }
-                
-                let code = result["code"].intValue
-                let info = result["info"].stringValue
-                
-                guard code == RETURN_CODE else {
-                    weakSelf!.WFShowHUD(info, status: WFStatusHUD.Failure)
-                    return
-                }
-                
-                guard let data = result["data"].arrayObject else {
-                    return
-                }
-                
-                var tempData = [HomeModel]()
-                for dict in data {
-                    tempData.append(HomeModel(dict: dict as! [String : AnyObject]))
-                }
-                finished(result: tempData)
-            })
-        })
-        //根据拖拽比例自动切换透明度
-        tableView.mj_header.automaticallyChangeAlpha = true
-        tableView.mj_header.beginRefreshing()
-    }
-    
-    //首页上拉加载
-    func homeLoadMoreData(tableView: UITableView, currentPage: Int, finished: (result: [HomeModel]) -> ()) {
-        
-        weak var weakSelf: WFNetwork? = self
-        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: { 
-            
-            let params: [String: AnyObject] = [
-                "page": currentPage
-            ]
-            
-            weakSelf!.WFGET(home_url, parameters: params, finished: { (success, result, error) in
-                
-                tableView.mj_footer.endRefreshing()
-                guard let result = result else {
-                    return
-                }
-                
-                let code = result["code"].intValue
-                let info = result["info"].stringValue
-                
-                guard code == RETURN_CODE else {
-                    weakSelf!.WFShowHUD(info, status: WFStatusHUD.Failure)
-                    return
-                }
-                
-                guard let data = result["data"].arrayObject else {
-                    return
-                }
-                
-                var tempData = [HomeModel]()
-                for dict in data {
-                    tempData.append(HomeModel(dict: dict as! [String : AnyObject]))
-                }
-                finished(result: tempData)
-            })
-        })
-    }
+//    func homeLoadNewData(tableView: UITableView, finished: (result: [HomeModel]) -> ()) {
+//        
+//        weak var weakSelf: WFNetwork? = self
+//        tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+//            
+//            let params: [String: AnyObject] = [
+//                "page": 0
+//            ]
+//            
+//            weakSelf!.WFGET(home_url, parameters: params, finished: { (success, result, error) in
+//                
+//                tableView.mj_header.endRefreshing()
+//                guard let result = result where success == true else {
+//                    return
+//                }
+//                
+//                let code = result["code"].intValue
+//                let info = result["info"].stringValue
+//                
+//                guard code == RETURN_CODE else {
+//                    weakSelf!.WFShowHUD(info, status: WFStatusHUD.Failure)
+//                    return
+//                }
+//                
+//                guard let data = result["data"].arrayObject else {
+//                    return
+//                }
+//                
+//                var tempData = [HomeModel]()
+//                for dict in data {
+//                    tempData.append(HomeModel(dict: dict as! [String : AnyObject]))
+//                }
+//                finished(result: tempData)
+//            })
+//        })
+//        //根据拖拽比例自动切换透明度
+//        tableView.mj_header.automaticallyChangeAlpha = true
+//        tableView.mj_header.beginRefreshing()
+//    }
+//    
+//    //首页上拉加载
+//    func homeLoadMoreData(tableView: UITableView, currentPage: Int, finished: (page: Int, result: [HomeModel]) -> ()) {
+//        
+//        weak var weakSelf: WFNetwork? = self
+//        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: { 
+//            
+//            let params: [String: AnyObject] = [
+//                "page": currentPage
+//            ]
+//            print("f:\(params)")
+//            weakSelf!.WFGET(home_url, parameters: params, finished: { (success, result, error) in
+//                
+//                tableView.mj_footer.endRefreshing()
+//                guard let result = result where success == true else {
+//                    return
+//                }
+//                
+//                let code = result["code"].intValue
+//                let info = result["info"].stringValue
+//                
+//                guard code == RETURN_CODE else {
+//                    weakSelf!.WFShowHUD(info, status: WFStatusHUD.Failure)
+//                    return
+//                }
+//                
+//                guard let data = result["data"].arrayObject else {
+//                    return
+//                }
+//                
+//                var tempData = [HomeModel]()
+//                for dict in data {
+//                    tempData.append(HomeModel(dict: dict as! [String : AnyObject]))
+//                }
+//                finished(page: currentPage + 1, result: tempData)
+//            })
+//        })
+//    }
     
     
     
@@ -172,11 +182,20 @@ class WFNetwork: NSObject, WFProgress {
             
             switch response.result {
                 
-                case let .Success(data):
+                case let .Success(value):
                     
-                    let json = JSON(data)
-                    //finished(result: json)
-                    finished(success: true, result: json, error: nil)
+                    let json = JSON(value)
+                    let data = json["data"]
+                    let code = json["code"].intValue
+                    let info = json["info"].stringValue
+                    
+                    guard code == Code_Success else {
+                        self.WFShowHUD(info, status: WFStatusHUD.Failure)
+                        finished(success: false, result: nil, error: nil)
+                        return
+                    }
+                    
+                    finished(success: true, result: data, error: nil)
                 case .Failure:
                     
                     print("网络不给力啊")
@@ -192,10 +211,20 @@ class WFNetwork: NSObject, WFProgress {
             
             switch response.result {
                 
-                case let .Success(data):
+                case let .Success(value):
                     
-                    let json = JSON(data)
-                    finished(success: true, result: json, error: nil)
+                    let json = JSON(value)
+                    let data = json["data"]
+                    let code = json["code"].intValue
+                    let info = json["info"].stringValue
+                    
+                    guard code == Code_Success else {
+                        self.WFShowHUD(info, status: WFStatusHUD.Failure)
+                        finished(success: false, result: nil, error: nil)
+                        return
+                    }
+                    
+                    finished(success: true, result: data, error: nil)
                 case .Failure:
                     
                     print("网络不给力啊")

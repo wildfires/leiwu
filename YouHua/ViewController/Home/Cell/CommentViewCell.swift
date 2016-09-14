@@ -25,7 +25,7 @@ class CommentViewCell: UITableViewCell {
         let temp = UIButton(type: UIButtonType.Custom)
         temp.setImage(UIImage(named: "timeline_icon_unlike"), forState: .Normal)
         temp.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 12)
+        temp.titleLabel?.font = UIFont(fontSize: 12)
         temp.setTitle("赞", forState: .Normal)
         temp.setTitleColor(UIColor.orangeColor(), forState: .Normal)
         temp.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -34,7 +34,7 @@ class CommentViewCell: UITableViewCell {
     
     lazy var digestLabel: UILabel = {
         let temp = UILabel()
-        //temp.font = UIFont(name: FONT_NAME, size: 14)
+        //temp.font = UIFont(fontSize: 14)
         temp.numberOfLines = 0
         //temp.setLineSpacing
         return temp
@@ -104,7 +104,7 @@ class CommentViewCell: UITableViewCell {
     func rowHeight(body: String) -> CGFloat {
         
         //图片高度 文字高度
-        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(name: FONT_NAME, size: 14)!, width: SCREEN_WIDTH - 44) // 50 + 16//body.sizeWithFont(UIFont(name: FONT_NAME, size: 16)!, maxSize: 16).height
+        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(fontSize: 14), width: Screen_Width - 44) // 50 + 16//body.sizeWithFont(UIFont(fontSize: 16)!, maxSize: 16).height
         //print(pictureHight) 头像36 图片200 评论26 内容？
         return 32 + 26 + textHight
     }
@@ -117,7 +117,7 @@ class CommentViewCell: UITableViewCell {
             avatarView.headView.sd_setImageWithURL(NSURL(string: url))
         }
         avatarView.nickLabel.text = model.nickname
-        avatarView.dateLabel.text = model.dateline!.withDate
-        digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+        avatarView.shortLabel.text = model.dateline!.withDate
+        digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: Color_Black, font: UIFont(fontSize: 14))
     }
 }

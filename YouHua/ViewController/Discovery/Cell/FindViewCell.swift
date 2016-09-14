@@ -23,18 +23,18 @@ class FindViewCell: UITableViewCell {
     lazy var titleLabel: UILabel = {
         let temp = UILabel()
         temp.text = "视频"
-        temp.textColor = UIColor.whiteColor()
+        temp.textColor = Color_White
         temp.textAlignment = .Center
-        temp.font = UIFont(name: FONT_NAME, size: 26)
+        temp.font = UIFont(fontSize: 26)
         //temp.backgroundColor = UIColor.redColor()
         return temp
     }()
     lazy var subTitleLabel: UILabel = {
         let temp = UILabel()
         temp.text = "VIDEO"
-        temp.textColor = UIColor.whiteColor()
+        temp.textColor = Color_White
         temp.textAlignment = .Center
-        temp.font = UIFont(name: FONT_NAME, size: 26)
+        temp.font = UIFont(fontSize: 26)
         //temp.backgroundColor = UIColor.orangeColor()
         return temp
     }()

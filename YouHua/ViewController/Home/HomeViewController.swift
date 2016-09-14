@@ -8,21 +8,31 @@
 
 import UIKit
 
-typealias HomeProtocol = protocol<UITableViewDelegate, UITableViewDataSource, HomeCellBarViewDelegate, HomeCellViewDelegate, AvatarViewDelegate>
+typealias HomeProtocol = protocol<UITableViewDelegate, UITableViewDataSource, HomeCellBarViewDelegate, HomeCellContViewDelegate, AvatarViewDelegate>
 
 class HomeViewController: UIViewController, HomeProtocol {
     
-    //var viewModel = HomeViewModel()
     let cellIdentifier = "homeCellIdentifier"
     
-    var tableArray = [HomeModel]()
+    var viewModel = HomeViewModel()
     var rowHeight: CGFloat = 0
-    var currentPage: Int = 0
     
     lazy var tableView: UITableView = {
-        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
-        temp.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 1)
+        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
+        temp.backgroundColor = UIColor(r: 240, g: 240, b: 240)
         temp.separatorStyle = .None
+        return temp
+    }()
+    
+    lazy var composeButton: UIButton = {
+        let temp = UIButton(frame: CGRect(x: (Screen_Width - 60), y: Screen_Height - 110, width: 46, height: 46))
+        temp.backgroundColor = Color_Red
+        temp.layer.cornerRadius = 25
+        temp.layer.masksToBounds = true
+        temp.layer.borderColor = Color_White.CGColor
+        temp.layer.borderWidth = 0.5
+        temp.addTarget(self, action: #selector(composeAction), forControlEvents: .TouchUpInside)
+        temp.hidden = true
         return temp
     }()
     
@@ -41,8 +51,15 @@ class HomeViewController: UIViewController, HomeProtocol {
 //  MARK: - Navigation
     func initView() {
         
-        setNavigationItem(title: "城市", selector: #selector(city), isRight: false)
+        setNavigationItem(title: "icon_search.png", selector: #selector(city), isRight: false)
         self.view.addSubview(tableView)
+        self.view.addSubview(composeButton)
+        
+        if MineViewModel.isLogin == true {
+            composeButton.hidden = false
+        } else {
+            composeButton.hidden = true
+        }
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -51,16 +68,15 @@ class HomeViewController: UIViewController, HomeProtocol {
         tableView.registerClass(HomeViewCell.classForCoder(), forCellReuseIdentifier: cellIdentifier)
         
         //上拉和下拉加载数据
-        WFNetwork.shareNetwork.homeLoadNewData(tableView) { (result) in
+        viewModel.loadHomeNewData(tableView) { (result) in
             
-            self.tableArray = result
+            self.viewModel.tableArray = result
             self.tableView.reloadData()
         }
         
-        WFNetwork.shareNetwork.homeLoadMoreData(tableView, currentPage: currentPage) { (result) in
+        viewModel.loadHomeMoreData(tableView) { (result) in
             
-            self.tableArray += result
-            self.currentPage += 1
+            self.viewModel.tableArray += result
             self.tableView.reloadData()
         }
     }
@@ -68,9 +84,16 @@ class HomeViewController: UIViewController, HomeProtocol {
     func city() {
         print("city")
         
-        let cityVC = TestViewController()
-        cityVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(cityVC, animated: true)
+//        let cityVC = TestViewController()
+//        cityVC.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(cityVC, animated: true)
+    }
+    
+    func composeAction() {
+        
+        let composeVC = ComposeViewController()
+        let nav = UINavigationController(rootViewController: composeVC)
+        presentViewController(nav, animated: true, completion: nil)
     }
     
 //  MARK: - Delegate
@@ -82,57 +105,52 @@ class HomeViewController: UIViewController, HomeProtocol {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tableArray.count
+        return viewModel.cellNumberOfRows
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: HomeViewCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! HomeViewCell
         
-        if let data: HomeModel = tableArray[indexPath.row] {
+        if let data: HomeModel = viewModel.tableArray[indexPath.row] {
+            
             cell.configureCell(data, indexPath: indexPath)
-            self.rowHeight = cell.rowHeight(data.content!)
+            self.rowHeight = cell.rowHeight
             cell.avatarView.delegate = self
-            cell.homeCellView.delegate = self
-            cell.homeCellView.barView.delegate = self
+            cell.homeCellContView.delegate = self
+            cell.homeCellBarView.delegate = self
         }
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let data = tableArray[indexPath.row]
-        
-        let detailVC = DetailViewController()
-        detailVC.hidesBottomBarWhenPushed = true
-        detailVC.detail_id = data.did!
-        //detailVC.toArray = viewModel.tableArray
-        navigationController?.pushViewController(detailVC, animated: true)
-    }
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        
+//        let detailVC = DetailViewController()
+//        detailVC.hidesBottomBarWhenPushed = true
+//        detailVC.detail_id = viewModel.tableArray[indexPath.row].did!
+//        //detailVC.toArray = viewModel.tableArray
+//        navigationController?.pushViewController(detailVC, animated: true)
+//    }
     
-    func homeCellView(cell: HomeCellView, didSelectedVideoAtIndex row: Int) {
-        
-        let data = tableArray[row]
+    func homeCellContView(cell: HomeCellContView, didSelectedVideoAtIndex row: Int) {
         
         let videoVC = VideoViewController()
         videoVC.hidesBottomBarWhenPushed = true
-        videoVC.videoUrl = data.video!
+        videoVC.videoUrl = viewModel.tableArray[row].video!
         presentViewController(videoVC, animated: true, completion: nil)
     }
     
     func avatarView(didSelectedAvatarAtIndex row: Int) {
         
-        let data = tableArray[row]
-        
         let mineVC = MineViewController()
-        mineVC.userid = data.did!
+        mineVC.userid = viewModel.tableArray[row].did!
         mineVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(mineVC, animated: true)
     }
     
     func homeCellBarViewDidSelectedButton(didSelectedAtIndex row: Int, didSelectedAtTag tag: Int) {
         
-        let data = tableArray[row]
+        let data = viewModel.tableArray[row]
         
         switch tag {
             case (row + 1):
@@ -144,8 +162,7 @@ class HomeViewController: UIViewController, HomeProtocol {
                 print("\(data.did) \(row) \(2)")
             case (row + 3):
                 
-                
-                let shareView: ShareView = ShareView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+                let shareView: ShareView = ShareView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
                 shareView.showInView()
             default:
                 break

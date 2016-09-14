@@ -16,8 +16,8 @@ class BasicViewController: UIViewController, BasicProtocol {
     var cellHeight: CGFloat = 0
     
     lazy var tableView: UITableView = {
-        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
-        temp.backgroundColor = UIColor.whiteColor()
+        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
+        temp.backgroundColor = Color_White
         //temp.separatorStyle = .None
         temp.tableFooterView = UIView()
         return temp
@@ -80,7 +80,7 @@ class BasicViewController: UIViewController, BasicProtocol {
         
         self.cellHeight = cell.rowHeight(body)
         
-        cell.txt.attributedText = body.stringWithParagraphlineSpeace(4, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+        cell.txt.attributedText = body.stringWithParagraphlineSpeace(4, color: Color_Tags, font: UIFont(fontSize: 14))
         
         return cell
     }

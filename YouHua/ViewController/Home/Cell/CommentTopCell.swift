@@ -18,8 +18,8 @@ class CommentTopCell: UITableViewCell, WFRichText {
         return temp
     }()
     
-    lazy var homeCellView: HomeCellView = {
-        let temp = HomeCellView()
+    lazy var homeCellContView: HomeCellContView = {
+        let temp = HomeCellContView()
         return temp
     }()
     
@@ -58,14 +58,14 @@ class CommentTopCell: UITableViewCell, WFRichText {
         self.containerView.userInteractionEnabled = true
         
         self.contentView.addSubview(containerView)
-        self.containerView.addSubview(homeCellView)
+        self.containerView.addSubview(homeCellContView)
         
         weak var weakSelf: CommentTopCell? = self
         containerView.snp_makeConstraints { (make) in
             make.edges.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(0, 0, 16, 0))
         }
         
-        homeCellView.snp_makeConstraints { (make) in
+        homeCellContView.snp_makeConstraints { (make) in
             make.edges.equalTo(weakSelf!.containerView).inset(UIEdgeInsetsMake(0, 0, 12, 0))
         }
     }
@@ -73,7 +73,7 @@ class CommentTopCell: UITableViewCell, WFRichText {
     func rowHeight(body: String) -> CGFloat {
         
         //图片高度 文字高度
-        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(name: FONT_NAME, size: 14)!, width: SCREEN_WIDTH - 16) // 50 + 16//body.sizeWithFont(UIFont(name: FONT_NAME, size: 16)!, maxSize: 16).height
+        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(fontSize: 14), width: Screen_Width - 16) // 50 + 16//body.sizeWithFont(UIFont(name: FONT_NAME, size: 16)!, maxSize: 16).height
         //print(pictureHight) 头像36 图片200 评论26 内容？
         return 282 + textHight
     }
@@ -81,19 +81,19 @@ class CommentTopCell: UITableViewCell, WFRichText {
     func configureCell(model: HomeModel, indexPath: NSIndexPath) {
         
         if model.type == "video" {
-            homeCellView.playButton.hidden = false
-            homeCellView.playButton.tag = indexPath.row
-            homeCellView.numberLabel.text = "00:10"
+            homeCellContView.playButton.hidden = false
+            homeCellContView.playButton.tag = indexPath.row
+            homeCellContView.numberLabel.text = "00:10"
         } else {
-            homeCellView.playButton.hidden = true
-            homeCellView.numberLabel.text = "\(model.photo) 张图"
+            homeCellContView.playButton.hidden = true
+            homeCellContView.numberLabel.text = "\(model.photo) 张图"
         }
         
         if let url: String = model.cover {
-            homeCellView.coverView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: THUMB_IMG))
+            homeCellContView.coverView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: Thumb_Picture))
         }
-        homeCellView.barView.praiseButton.setTitle(model.likes!.withCount, forState: .Normal)
-        homeCellView.barView.discussButton.setTitle(model.comments!.withCount, forState: .Normal)
-        homeCellView.digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: UIColor.blackColor(), font: UIFont(name: FONT_NAME, size: 14)!)
+//        homeCellContView.barView.praiseButton.setTitle(model.likes!.withCount, forState: .Normal)
+//        homeCellView.barView.discussButton.setTitle(model.comments!.withCount, forState: .Normal)
+        homeCellContView.digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: Color_Tags, font: UIFont(fontSize: 14))
     }
 }

@@ -14,7 +14,7 @@ class BasicViewCell: UITableViewCell {
     lazy var txt: UILabel = {
         let temp = UILabel()
         temp.numberOfLines = 0
-        temp.font = UIFont(name: FONT_NAME, size: 14)
+        temp.font = UIFont(fontSize: 14)
         return temp
     }()
     
@@ -54,7 +54,7 @@ class BasicViewCell: UITableViewCell {
     
     func rowHeight(body: String) -> CGFloat {
         
-        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(4, font: UIFont(name: FONT_NAME, size: 14)!, width: SCREEN_WIDTH - 16)
+        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(4, font: UIFont(fontSize: 14), width: Screen_Width - 16)
         return textHight
     }
 

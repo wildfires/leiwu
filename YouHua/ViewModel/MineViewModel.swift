@@ -112,36 +112,28 @@ class MineViewModel: NSObject, WFProgress {
             return
         }
         
-        var parameters: [String: AnyObject]
-        parameters = [
+        let params: [String: AnyObject] = [
             "user": user,
             "pass": pass,
             "type": 1
         ]
         
         WFShowHUD("注册中...", status: WFStatusHUD.Waiting)
-        WFNetwork.shareNetwork.WFPost(register_url, parameters: parameters) { (success, result, error) in
+        WFNetwork.shareNetwork.WFPOST(register_url, parameters: params) { (success, result, error) in
             
-            if let result = result {
-                
-                let code = result["code"].intValue
-                let info = result["info"].stringValue
-                
-                guard code == RETURN_CODE else {
-                    self.WFShowHUD(info, status: WFStatusHUD.Failure)
-                    return
-                }
-                
-                guard let data = result["data"].dictionary else {
-                    return
-                }
-                
-                print(data)
-                //self.model?.avatar = data["avatar"]?.stringValue
-                self.saveAccount()
-                self.WFHideHUD()
-                finished(success: true)
+            guard let result = result where success == true else {
+                return
             }
+            
+            guard let data = result.dictionary else {
+                return
+            }
+            
+            print(data)
+            //self.model?.avatar = data["avatar"]?.stringValue
+            self.saveAccount()
+            self.WFHideHUD()
+            finished(success: true)
         }
     }
     
@@ -158,34 +150,25 @@ class MineViewModel: NSObject, WFProgress {
             return
         }
         
-        var parameters: [String: AnyObject]
-        parameters = [
+        let params: [String: AnyObject] = [
             "user": user,
             "pass": pass
         ]
         WFShowHUD("登陆中...", status: WFStatusHUD.Waiting)
-        WFNetwork.shareNetwork.WFPost(login_url, parameters: parameters) { (success, result, error) in
+        WFNetwork.shareNetwork.WFPOST(login_url, parameters: params) { (success, result, error) in
             
-            if let result = result {
-                
-                let code = result["code"].intValue
-                let info = result["info"].stringValue
-                
-                guard code == RETURN_CODE else {
-                    self.WFShowHUD(info, status: WFStatusHUD.Failure)
-                    return
-                }
-                
-                guard let data = result["data"].dictionary else {
-                    return
-                }
-                
-                print(data)
-                //self.model!.uid = data["uid"]!.intValue
-                self.saveAccount()
-                self.WFHideHUD()
-                finished(success: true)
+            guard let result = result where success == true else {
+                return
             }
+            
+            guard let data = result.dictionary else {
+                return
+            }
+            
+            print(data)
+            self.saveAccount()
+            self.WFHideHUD()
+            finished(success: true)
         }
     }
     

@@ -18,23 +18,23 @@ class FindViewController: UIViewController, FindProtocol {
     
     var viewModel = FindViewModel()
     lazy var bannerView: BannerView = {
-        let temp = BannerView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 200))
-        temp.backgroundColor = UIColor.whiteColor()
+        let temp = BannerView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 200))
+        temp.backgroundColor = Color_White
         return temp
     }()
     lazy var menuView: SubNavView = {
-        let temp = SubNavView(frame: CGRect(x: 0, y: 200, width: SCREEN_WIDTH, height: 90))
-        temp.backgroundColor = UIColor.whiteColor()
+        let temp = SubNavView(frame: CGRect(x: 0, y: 200, width: Screen_Width, height: 90))
+        temp.backgroundColor = Color_White
         return temp
     }()
     lazy var headerView: UIView = {
-        let temp = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 300))
+        let temp = UIView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 300))
         temp.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 1)
         return temp
     }()
     
     lazy var tableView: UITableView = {
-        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
         temp.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 1)
         temp.separatorStyle = .None
         return temp

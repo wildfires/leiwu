@@ -14,8 +14,8 @@ class MessageViewController: UIViewController, MessageProtocol {
 
     let cellIdentifier = "cellid"
     lazy var tableView: UITableView = {
-        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
-        temp.separatorColor = UIColor.grayColor()
+        let temp = UITableView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
+        temp.separatorColor = Color_Gray
         temp.separatorInset = UIEdgeInsetsMake(0, 60, 0, 0)
         return temp
     }()

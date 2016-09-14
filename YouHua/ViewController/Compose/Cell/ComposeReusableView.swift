@@ -18,7 +18,7 @@ class ComposeReusableView: UICollectionReusableView, UITextViewDelegate {
     
     lazy var textView: UITextView = {
         let temp = UITextView()
-        temp.font = UIFont(name: FONT_NAME, size: 14)
+        temp.font = UIFont(fontSize: 14)
         temp.backgroundColor = UIColor.whiteColor()
         temp.delegate = self
         temp.scrollEnabled = true //是否可以拖动
@@ -45,7 +45,7 @@ class ComposeReusableView: UICollectionReusableView, UITextViewDelegate {
     lazy var locationButton: UIButton = {
         let temp = UIButton()
         temp.setImage(UIImage(named: "compose_locatebutton_ready"), forState: .Normal)
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 14)
+        temp.titleLabel?.font = UIFont(fontSize: 14)
         temp.setTitle("成都驷马桥圣地亚家居", forState: .Normal)
         temp.setTitleColor(UIColor.grayColor(), forState: .Normal)
         //temp.backgroundColor = UIColor.brownColor()

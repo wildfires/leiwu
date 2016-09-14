@@ -30,7 +30,7 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
     var isJumpHomeViewController: Bool = false
     
     lazy var imageView: UIImageView = {
-        let temp = UIImageView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT))
+        let temp = UIImageView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
         temp.userInteractionEnabled = true
         temp.contentMode = .ScaleAspectFill
         temp.clipsToBounds = true
@@ -39,7 +39,7 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
     
     lazy var closeButton: UIButton = {
         let temp = UIButton()
-        temp.backgroundColor = UIColor.grayColor()
+        //temp.backgroundColor = UIColor.grayColor()
         temp.setImage(UIImage(named: "compose_card_delete_highlighted"), forState: .Normal)
         temp.addTarget(self, action: #selector(closeViewAction), forControlEvents: .TouchUpInside)
         return temp
@@ -59,7 +59,7 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
         temp.layer.masksToBounds = true
         temp.backgroundColor = RGBA(red: 255, green: 255, blue: 255, alpha: 0.8)
         temp.textColor = UIColor.blackColor()
-        temp.font = UIFont(name: FONT_NAME, size: 12)
+        temp.font = UIFont(name: Font_Name, size: 12)
         temp.leftView = UIView(frame: CGRectMake(0, 0, 44, 44))
         temp.leftViewMode = .Always
         return temp
@@ -74,9 +74,9 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
         temp.layer.cornerRadius = 4
         temp.layer.masksToBounds = true
         temp.backgroundColor = RGBA(red: 255, green: 255, blue: 255, alpha: 0.8)
-        temp.textColor = UIColor.blackColor()
+        temp.textColor = Color_Black
         temp.secureTextEntry = true
-        temp.font = UIFont(name: FONT_NAME, size: 12)
+        temp.font = UIFont(fontSize: 12)
         temp.leftView = UIView(frame: CGRectMake(0, 0, 44, 44))
         temp.leftViewMode = .Always
         return temp
@@ -86,20 +86,20 @@ class LoginAndRegController: UIViewController, UITextFieldDelegate {
         let temp = UIButton()
         temp.layer.cornerRadius = 4
         temp.layer.masksToBounds = true
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 14)
+        temp.titleLabel?.font = UIFont(fontSize: 14)
         return temp
     }()
     
     lazy var changeButton: UIButton = {
         let temp = UIButton()
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 12)
+        temp.titleLabel?.font = UIFont(fontSize: 12)
         return temp
     }()
     
     lazy var forgotButton: UIButton = {
         let temp = UIButton()
         temp.setTitle("忘记密码?", forState: .Normal)
-        temp.titleLabel?.font = UIFont(name: FONT_NAME, size: 12)
+        temp.titleLabel?.font = UIFont(fontSize: 12)
         temp.addTarget(self, action: #selector(forgotPassAction), forControlEvents: .TouchUpInside)
         return temp
     }()

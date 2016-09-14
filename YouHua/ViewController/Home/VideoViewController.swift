@@ -12,7 +12,7 @@ class VideoViewController: UIViewController {
 
     var videoUrl: String = ""
     lazy var videoView: VideoView = {
-        let temp = VideoView(frame: CGRect(x: 0, y: 0, width: SCREEN_HEIGHT, height: SCREEN_WIDTH))
+        let temp = VideoView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: Screen_Height))
         return temp
     }()
     
