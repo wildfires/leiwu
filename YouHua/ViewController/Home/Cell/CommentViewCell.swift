@@ -18,19 +18,9 @@ class CommentViewCell: UITableViewCell {
     
     lazy var avatarView: AvatarView = {
         let temp = AvatarView()
+        temp.initView(AvatarSize.Small, boxSize: 26)
         return temp
     }()
-    
-    lazy var praiseButton: UIButton = {
-        let temp = UIButton(type: UIButtonType.Custom)
-        temp.setImage(UIImage(named: "timeline_icon_unlike"), forState: .Normal)
-        temp.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        temp.titleLabel?.font = UIFont(fontSize: 12)
-        temp.setTitle("赞", forState: .Normal)
-        temp.setTitleColor(UIColor.orangeColor(), forState: .Normal)
-        temp.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        return temp
-    }()//赞美
     
     lazy var digestLabel: UILabel = {
         let temp = UILabel()
@@ -67,9 +57,7 @@ class CommentViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        avatarView.initView(AvatarSize.Small, boxSize: 26)
-        
-        self.contentView.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 1)
+        self.contentView.backgroundColor = Color_Background
         
         //取消cell点击效果
         self.selectionStyle = .None
@@ -77,7 +65,6 @@ class CommentViewCell: UITableViewCell {
         self.containerView.userInteractionEnabled = true
         self.contentView.addSubview(containerView)
         self.containerView.addSubview(avatarView)
-        self.containerView.addSubview(praiseButton)
         self.containerView.addSubview(digestLabel)
         
         weak var weakSelf: CommentViewCell? = self
@@ -86,27 +73,22 @@ class CommentViewCell: UITableViewCell {
         }
         
         avatarView.snp_makeConstraints { (make) in
-            make.top.left.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(8, 8, 0, 0))
-            make.right.equalTo(praiseButton.snp_left).offset(-8)
+            make.top.left.right.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(Margin_Width, Margin_Width, 0, Margin_Width))
             make.height.equalTo(26)
         }
         
-        praiseButton.snp_makeConstraints { (make) in
-            make.top.right.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(8, 0, 0, 8))
-        }
-        
         digestLabel.snp_makeConstraints { (make) in
-            make.top.equalTo(avatarView.snp_bottom).offset(8)
-            make.left.bottom.right.equalTo(weakSelf!.containerView).inset(UIEdgeInsetsMake(0, 42, 8, 8))
+            make.top.equalTo(avatarView.snp_bottom).offset(4)
+            make.left.bottom.right.equalTo(weakSelf!.containerView).inset(UIEdgeInsetsMake(0, 2 * Margin_Width + 26, Margin_Width, Margin_Width))
         }
     }
     
     func rowHeight(body: String) -> CGFloat {
         
         //图片高度 文字高度
-        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(fontSize: 14), width: Screen_Width - 44) // 50 + 16//body.sizeWithFont(UIFont(fontSize: 16)!, maxSize: 16).height
-        //print(pictureHight) 头像36 图片200 评论26 内容？
-        return 32 + 26 + textHight
+        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(4, font: UIFont(fontSize: 14), width: Screen_Width - (3 * Margin_Width + 26))
+        //Margin_Width + 头像26 + 4 + 内容？+ Margin_Width + 1
+        return 31 + textHight + 2 * Margin_Width
     }
     
     func configureCell(model: HomeModel, indexPath: NSIndexPath) {
@@ -118,6 +100,6 @@ class CommentViewCell: UITableViewCell {
         }
         avatarView.nickLabel.text = model.nickname
         avatarView.shortLabel.text = model.dateline!.withDate
-        digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: Color_Black, font: UIFont(fontSize: 14))
+        digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(4, color: Color_Description, font: UIFont(fontSize: 14))
     }
 }

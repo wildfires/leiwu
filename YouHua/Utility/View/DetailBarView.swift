@@ -12,12 +12,12 @@ import SnapKit
 protocol DetailBarViewDelegate: NSObjectProtocol {
     
     func backViewAction()
-    
+    func detailBarView(didSelectedAtIndex row: Int, didSelectedAtTag tag: Int)
 }
-
 class DetailBarView: UIView {
     
     weak var delegate: DetailBarViewDelegate!
+    var rowID: Int = 0
     
     var VIEW_WIDTH: CGFloat = 0
     var VIEW_HEIGHT: CGFloat = 0
@@ -33,37 +33,53 @@ class DetailBarView: UIView {
         return temp
     }()//返回
     
-    lazy var shareButton: UIButton = {
-        let temp = UIButton(type: UIButtonType.Custom)
-        temp.setImage(UIImage(named: "timeline_icon_retweet"), forState: .Normal)
-        temp.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        temp.titleLabel?.font = UIFont(fontSize: 12)
-        temp.setTitle("分享", forState: .Normal)
-        temp.setTitleColor(UIColor.orangeColor(), forState: .Normal)
-        temp.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        return temp
-    }()//分享
+//    lazy var shareButton: UIButton = {
+//        let temp = UIButton(type: UIButtonType.Custom)
+//        temp.setImage(UIImage(named: "timeline_icon_retweet"), forState: .Normal)
+//        temp.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+//        temp.titleLabel?.font = UIFont(fontSize: 12)
+//        temp.setTitle("分享", forState: .Normal)
+//        temp.setTitleColor(UIColor.orangeColor(), forState: .Normal)
+//        temp.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+//        return temp
+//    }()//分享
+//    
+//    lazy var praiseButton: UIButton = {
+//        let temp = UIButton(type: UIButtonType.Custom)
+//        temp.setImage(UIImage(named: "timeline_icon_unlike"), forState: .Normal)
+//        temp.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+//        temp.titleLabel?.font = UIFont(fontSize: 12)
+//        temp.setTitle("赞", forState: .Normal)
+//        temp.setTitleColor(UIColor.orangeColor(), forState: .Normal)
+//        temp.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+//        return temp
+//    }()//赞美
+//    
+//    lazy var discussButton: UIButton = {
+//        let temp = UIButton(type: UIButtonType.Custom)
+//        temp.setImage(UIImage(named: "timeline_icon_comment"), forState: .Normal)
+//        temp.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+//        temp.titleLabel?.font = UIFont(fontSize: 12)
+//        temp.setTitle("评论", forState: .Normal)
+//        temp.setTitleColor(UIColor.orangeColor(), forState: .Normal)
+//        return temp
+//    }()//讨论
     
     lazy var praiseButton: UIButton = {
-        let temp = UIButton(type: UIButtonType.Custom)
-        temp.setImage(UIImage(named: "timeline_icon_unlike"), forState: .Normal)
-        temp.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        temp.titleLabel?.font = UIFont(fontSize: 12)
-        temp.setTitle("赞", forState: .Normal)
-        temp.setTitleColor(UIColor.orangeColor(), forState: .Normal)
-        temp.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
+        let temp = UIButton(image: "icon_like_", title: "0", font: UIFont(fontSize: 12), color: Color_Gray)
+        temp.addTarget(self, action: #selector(barButtonAction(_:)), forControlEvents: .TouchUpInside)
         return temp
-    }()//赞美
-    
+    }()//赞/喜好
     lazy var discussButton: UIButton = {
-        let temp = UIButton(type: UIButtonType.Custom)
-        temp.setImage(UIImage(named: "timeline_icon_comment"), forState: .Normal)
-        temp.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
-        temp.titleLabel?.font = UIFont(fontSize: 12)
-        temp.setTitle("评论", forState: .Normal)
-        temp.setTitleColor(UIColor.orangeColor(), forState: .Normal)
+        let temp = UIButton(image: "icon_msg_", title: "0", font: UIFont(fontSize: 12), color: Color_Gray)
+        temp.addTarget(self, action: #selector(barButtonAction(_:)), forControlEvents: .TouchUpInside)
         return temp
-    }()//讨论
+    }()//评论
+    lazy var shareButton: UIButton = {
+        let temp = UIButton(image: "icon_share_", title: "分享", font: UIFont(fontSize: 12), color: Color_Gray)
+        temp.addTarget(self, action: #selector(barButtonAction(_:)), forControlEvents: .TouchUpInside)
+        return temp
+    }()//分享
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -94,19 +110,22 @@ class DetailBarView: UIView {
         backButton.addTarget(self, action: #selector(backViewAction), forControlEvents: .TouchUpInside)
         
         weak var weakSelf: DetailBarView? = self
+        let Margin_Top: CGFloat = Margin_Height / 2
+        let Margin_Left: CGFloat = 2 * Margin_Width
         backButton.snp_makeConstraints { (make) in
-            make.top.left.bottom.equalTo(weakSelf!).inset(UIEdgeInsetsMake(8, 8, 8, 0))
+            make.top.left.bottom.equalTo(weakSelf!).inset(UIEdgeInsetsMake(Margin_Top, Margin_Width, Margin_Top, 0))
+        }
+        
+        shareButton.snp_makeConstraints { (make) in
+            make.top.right.bottom.equalTo(weakSelf!).inset(UIEdgeInsetsMake(Margin_Top, 0, Margin_Top, Margin_Width))
         }
         discussButton.snp_makeConstraints { (make) in
-            make.top.bottom.right.equalTo(weakSelf!).inset(UIEdgeInsetsMake(8, 0, 8, 8))
+            make.top.bottom.equalTo(weakSelf!).inset(UIEdgeInsetsMake(Margin_Top, 0, Margin_Top, 0))
+            make.right.equalTo(shareButton.snp_left).offset(-Margin_Left)
         }
         praiseButton.snp_makeConstraints { (make) in
-            make.top.bottom.equalTo(weakSelf!).inset(UIEdgeInsetsMake(8, 0, 8, 0))
-            make.right.equalTo(discussButton.snp_left).offset(-8)
-        }
-        shareButton.snp_makeConstraints { (make) in
-            make.top.bottom.equalTo(weakSelf!).inset(UIEdgeInsetsMake(8, 0, 8, 0))
-            make.right.equalTo(praiseButton.snp_left).offset(-8)
+            make.top.bottom.equalTo(weakSelf!).inset(UIEdgeInsetsMake(Margin_Top, 0, Margin_Top, 0))
+            make.right.equalTo(discussButton.snp_left).offset(-Margin_Left)
         }
     }
     
@@ -116,6 +135,14 @@ class DetailBarView: UIView {
         if delegate != nil {
             delegate.backViewAction()
         }
+    }
+    
+    func barButtonAction(button: UIButton) {
+        
+        guard delegate != nil else {
+            return
+        }
+        delegate.detailBarView(didSelectedAtIndex: rowID, didSelectedAtTag: button.tag)
     }
     
     override func drawRect(rect: CGRect) {

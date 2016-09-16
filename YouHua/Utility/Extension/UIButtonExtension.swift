@@ -34,8 +34,8 @@ extension UIButton {
         setTitleColor(color, forState: .Normal)
         titleLabel?.font = font
         setTitle(title, forState: .Normal)
-        contentEdgeInsets = UIEdgeInsets(top: 0, left: 2, bottom: 0, right: 0)
-        imageEdgeInsets = UIEdgeInsets(top: 0, left: -2, bottom: 0, right: 2)
+        contentEdgeInsets = UIEdgeInsets(top: 0, left: 6, bottom: 0, right: 0)
+        imageEdgeInsets = UIEdgeInsets(top: 0, left: -6, bottom: 0, right: 6)
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     

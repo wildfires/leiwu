@@ -13,8 +13,7 @@ typealias DetailProtocol = protocol<UITableViewDelegate, UITableViewDataSource, 
 
 class DetailViewController: UIViewController, DetailProtocol {
 
-    var viewModel = HomeViewModel()
-    //var toArray: Array<HomeModel> = []
+    var viewModel = DetailViewModel()
     
     let contentCellIdentifier = "contentcellid"
     let commentCellIdentifier = "commentcellid"
@@ -31,18 +30,22 @@ class DetailViewController: UIViewController, DetailProtocol {
     
     lazy var avatarView: AvatarView = {
         let temp = AvatarView(frame: CGRect(x: 0, y: 4, width: 160, height: 36))
+        temp.initView(AvatarSize.Large, boxSize: 36)
         temp.headView.layer.cornerRadius = 0
         temp.headView.layer.masksToBounds = false
         return temp
     }()
     
     lazy var followButton: UIButton = {
-        let temp = UIButton(image: "timeline_icon_retweet", title: "关注", font: UIFont(fontSize: 12), color: UIColor.whiteColor())
-        temp.frame = CGRect(x: 0, y: 7, width: 70, height: 30)
-        temp.backgroundColor = RGBA(red: 22, green: 164, blue: 174, alpha: 1)
-        temp.layer.cornerRadius = 2
+        let temp = UIButton(image: "follow_icon_retweet", title: "关注", font: UIFont(fontSize: 12), color: UIColor.whiteColor())
+        temp.frame = CGRect(x: 0, y: 8, width: 70, height: 30)
+        temp.backgroundColor = Color_White
+        temp.setTitleColor(Color_Button, forState: .Normal)
+        temp.layer.borderWidth = 1
+        temp.layer.borderColor = Color_Button.CGColor
+        temp.layer.cornerRadius = 3
         temp.layer.masksToBounds = true
-        
+        temp.addTarget(self, action: #selector(followAction(_:)), forControlEvents: .TouchUpInside)
         return temp
     }()
     
@@ -55,14 +58,6 @@ class DetailViewController: UIViewController, DetailProtocol {
         super.viewDidLoad()
         
         initView()
-        viewModel.fetchOneData(Int(detail_id)) { (success) in
-            
-            guard success == true else {
-                return
-            }
-            self.tableView.reloadData()
-        }
-        requestData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,11 +69,6 @@ class DetailViewController: UIViewController, DetailProtocol {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: avatarView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: followButton)
         
-        avatarView.initView(AvatarSize.Large, boxSize: 36)
-        avatarView.headView.layer.cornerRadius = 0
-        avatarView.headView.layer.masksToBounds = false
-        
-        self.view.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(tableView)
         self.view.addSubview(detailBarView)
         
@@ -88,7 +78,6 @@ class DetailViewController: UIViewController, DetailProtocol {
         
         tableView.registerClass(CommentTopCell.classForCoder(), forCellReuseIdentifier: contentCellIdentifier)
         tableView.registerClass(CommentViewCell.classForCoder(), forCellReuseIdentifier: commentCellIdentifier)
-        
         
         weak var weakSelf: DetailViewController? = self
         tableView.snp_makeConstraints { (make) in
@@ -101,17 +90,16 @@ class DetailViewController: UIViewController, DetailProtocol {
             make.height.equalTo(44)
         }
         
-        followButton.addTarget(self, action: #selector(followAction(_:)), forControlEvents: .TouchUpInside)
-    }
-    
-    func requestData() {
-        
-        viewModel.fetchHomeData() { (success) in
+        viewModel.loadContentData(detail_id) { (result) in
             
-//            guard success == true else {
-//                return
-//            }
-            self.tableView.reloadData()
+            weakSelf!.viewModel.contentArray = result
+            weakSelf!.tableView.reloadData()
+        }
+        
+        viewModel.loadCommentData(detail_id) { (result) in
+            
+            weakSelf!.viewModel.commentArray = result
+            weakSelf!.tableView.reloadData()
         }
     }
     
@@ -142,10 +130,10 @@ class DetailViewController: UIViewController, DetailProtocol {
         switch section {
             case 0:
                 
-                return viewModel.cellTopNumberOfRows
+                return viewModel.cellContentNumberOfRows
             case 1:
                 
-                return viewModel.cellNumberOfRows
+                return viewModel.cellCommentNumberOfRows
             default:
                 
                 return 0
@@ -159,18 +147,18 @@ class DetailViewController: UIViewController, DetailProtocol {
                 
                 let cell: CommentTopCell = tableView.dequeueReusableCellWithIdentifier(contentCellIdentifier) as! CommentTopCell
                 
-                if let condata: HomeModel = viewModel.topArray[0] {
-                    cell.configureCell(condata, indexPath: indexPath)
-                    self.contentRowHeight = cell.rowHeight(condata.content!)
+                if let contentData: HomeModel = viewModel.contentArray[detail_id] {
+                    cell.configureCell(contentData, indexPath: indexPath)
+                    self.contentRowHeight = cell.rowHeight(contentData.content!)
                     
                     avatarView.delegate = self
                     avatarView.headView.tag = indexPath.row
                     avatarView.nickLabel.tag = indexPath.row
-                    if let url: String = condata.avatar {
+                    if let url: String = contentData.avatar {
                         avatarView.headView.sd_setImageWithURL(NSURL(string: url))
                     }
-                    avatarView.nickLabel.text = condata.nickname
-                    avatarView.shortLabel.text = String(condata.dateline)//.withDate
+                    avatarView.nickLabel.text = contentData.nickname
+                    avatarView.shortLabel.text = "耒物创始人"//String(condata.dateline)//.withDate
                 }
                 
                 return cell
@@ -179,9 +167,9 @@ class DetailViewController: UIViewController, DetailProtocol {
                 let cell: CommentViewCell = tableView.dequeueReusableCellWithIdentifier(commentCellIdentifier) as! CommentViewCell
                 
                 //models.objectAtIndex(indexPath.row) as? WXStatusModel
-                if let comdata: HomeModel = viewModel.tableArray[indexPath.row] {
-                    cell.configureCell(comdata, indexPath: indexPath)
-                    self.commentRowHeight = cell.rowHeight(comdata.content!)
+                if let commentData: HomeModel = viewModel.commentArray[indexPath.row] {
+                    cell.configureCell(commentData, indexPath: indexPath)
+                    self.commentRowHeight = cell.rowHeight(commentData.content!)
                     cell.avatarView.delegate = self
                 }
                 return cell
@@ -208,11 +196,12 @@ class DetailViewController: UIViewController, DetailProtocol {
             case 1:
                 
                 let headerView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 40))
-                headerView.backgroundColor = Color_Gray
-                let titleLabel: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 39.5))
+                headerView.backgroundColor = Color_Background
+                let titleLabel: WFLabel = WFLabel(frame: CGRect(x: 0, y: 0, width: Screen_Width, height: 39))
                 titleLabel.backgroundColor = Color_White
-                titleLabel.text = "  评论列表 \(viewModel.cellNumberOfRows)"
+                titleLabel.text = "评论列表 \(viewModel.cellCommentNumberOfRows)"
                 titleLabel.font = UIFont(fontSize: 14)
+                titleLabel.textInsets = UIEdgeInsets(top: 0, left: Margin_Width, bottom: 0, right: 0)
                 headerView.addSubview(titleLabel)
                 
                 return headerView
@@ -224,12 +213,17 @@ class DetailViewController: UIViewController, DetailProtocol {
     
     func avatarView(didSelectedAvatarAtIndex row: Int) {
         
-        let data = viewModel.tableArray[row]
+        let data = viewModel.commentArray[row]
         
         let mineVC = MineViewController()
         mineVC.userid = data.did!
         mineVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(mineVC, animated: true)
+    }
+    
+    func detailBarView(didSelectedAtIndex row: Int, didSelectedAtTag tag: Int) {
+        
+        
     }
     
     func followAction(button: UIButton) {

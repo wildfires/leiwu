@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-enum ComposeViewType: Int {
+enum ComposeReusableViewType: Int {
     case Header
     case Footer
 }
@@ -80,7 +80,7 @@ class ComposeReusableView: UICollectionReusableView, UITextViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func initView(viewType: ComposeViewType) {
+    func initView(viewType: ComposeReusableViewType) {
         
         switch viewType {
             case .Header:

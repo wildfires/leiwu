@@ -16,23 +16,24 @@ class HomeViewCell: UITableViewCell, WFRichText {
     
     lazy var containerView: UIImageView = {
         let temp = UIImageView()
-        temp.backgroundColor = UIColor.whiteColor()
+        temp.backgroundColor = Color_White
         return temp
     }()
 
-    lazy var avatarView: AvatarView = {
-        let temp = AvatarView()
-        temp.initView(AvatarSize.Large, boxSize: 36) //设置头像大小
+    lazy var homeViewCellAvatar: HomeViewCellAvatar = {
+        let temp = HomeViewCellAvatar()
+        temp.initView(HomeViewCellAvatarSize.Large, boxSize: 36) //设置头像大小
+        temp.backgroundColor = Color_White
         return temp
     }()
     
-    lazy var homeCellContView: HomeCellContView = {
-        let temp = HomeCellContView()
+    lazy var homeViewCellContent: HomeViewCellContent = {
+        let temp = HomeViewCellContent()
         return temp
     }()
     
-    lazy var homeCellBarView: HomeCellBarView = {
-        let temp = HomeCellBarView()
+    lazy var homeViewCellBar: HomeViewCellBar = {
+        let temp = HomeViewCellBar()
         //temp.backgroundColor = UIColor.grayColor()
         return temp
     }()
@@ -64,11 +65,11 @@ class HomeViewCell: UITableViewCell, WFRichText {
             view.removeFromSuperview()
         }
         
-        self.contentView.backgroundColor = RGBA(red: 240, green: 240, blue: 240, alpha: 1)
+        self.contentView.backgroundColor = Color_Background
         self.contentView.addSubview(containerView)
-        self.containerView.addSubview(avatarView)
-        self.containerView.addSubview(homeCellContView)
-        self.containerView.addSubview(homeCellBarView)
+        self.containerView.addSubview(homeViewCellAvatar)
+        self.containerView.addSubview(homeViewCellContent)
+        self.containerView.addSubview(homeViewCellBar)
         //取消cell点击效果
         self.selectionStyle = .None
         //打开交互
@@ -79,29 +80,29 @@ class HomeViewCell: UITableViewCell, WFRichText {
             make.edges.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(0, 0, Margin_Height, 0))
         }
         
-        avatarView.snp_makeConstraints { (make) in
+        homeViewCellAvatar.snp_makeConstraints { (make) in
             make.top.left.right.equalTo(weakSelf!.contentView).inset(UIEdgeInsetsMake(Margin_Height / 2, Margin_Width, 0, Margin_Width))
-            make.height.equalTo(36 + Margin_Height / 2) //头像高度 36 头像内底部间距 MARGIN
+            make.height.equalTo(36 + Margin_Height / 2) //头像高度 36 头像内底部间距 Margin_Height/2
         }
         
-        homeCellContView.snp_makeConstraints { (make) in
-            make.top.equalTo(avatarView.snp_bottom).offset(Margin_Height)
+        homeViewCellContent.snp_makeConstraints { (make) in
+            make.top.equalTo(homeViewCellAvatar.snp_bottom).offset(Margin_Height)
             make.left.right.equalTo(weakSelf!.containerView).inset(UIEdgeInsetsMake(0, 0, 0, 0))
         }
         
-        homeCellBarView.snp_makeConstraints { (make) in
-            make.top.equalTo(homeCellContView.snp_bottom).offset(Margin_Height)
+        homeViewCellBar.snp_makeConstraints { (make) in
+            make.top.equalTo(homeViewCellContent.snp_bottom).offset(Margin_Height)
             make.left.bottom.right.equalTo(weakSelf!.containerView).inset(UIEdgeInsetsMake(0, Margin_Width, 0, Margin_Width))
-            make.height.equalTo(30) //不设置size会没有点击效果 26 + MARGIN
+            make.height.equalTo(26) //不设置size会没有点击效果 26
         }
     }
     
     func rowHeight(body: String) -> CGFloat {
         
         //图片高度 文字高度
-        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(fontSize: 14), width: Screen_Width - 2 * Margin_Width)
-        //Margin_Height/2 + 头像36 + Margin_Height/2 + 内容？+ Margin_Height + 图片200 + Margin_Height + 工具栏30 + Margin_Height + Margin_Height
-        return 266 + textHight + 5 * Margin_Height
+        let textHight: CGFloat = body.getSpaceLabelHeightWithSpeace(6, font: UIFont(fontSize: 14), width: Screen_Width - (2 * Margin_Width))
+        //Margin_Height/2 + 头像36 + Margin_Height/2 + 内容？+ Margin_Height + 图片180 + Margin_Height + 工具栏26 + Margin_Height + Margin_Height
+        return 242 + textHight + 5 * Margin_Height
     }
     
     func configureCell(model: HomeModel, indexPath: NSIndexPath) {
@@ -111,35 +112,39 @@ class HomeViewCell: UITableViewCell, WFRichText {
         self.rowHeight = self.rowHeight(model.content!)
         
         if model.type == "video" {
-            homeCellContView.playButton.hidden = false
-            homeCellContView.playButton.tag = row
-            homeCellContView.numberLabel.text = "00:10"
+            homeViewCellContent.videoPlayView.hidden = false
+            homeViewCellContent.videoPlayView.tag = row
+            homeViewCellContent.numberLabel.text = "01:00:10"
         } else {
-            homeCellContView.playButton.hidden = true
-            homeCellContView.numberLabel.text = "\(model.photo!) 张图"
+            homeViewCellContent.videoPlayView.hidden = true
+            homeViewCellContent.numberLabel.text = "\(model.photo!) 张图"
         }
+        
         if let url: String = model.avatar {
-            avatarView.headView.sd_setImageWithURL(NSURL(string: url))
+            homeViewCellAvatar.headView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: Thumb_Avatar))
         }
+        
         if let url: String = model.cover {
-            homeCellContView.coverView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: Thumb_Picture))
+            homeViewCellContent.coverView.sd_setImageWithURL(NSURL(string: url), placeholderImage: UIImage(named: Thumb_Picture))
         }
-        avatarView.nickLabel.text = "三杯茶茶"//model.nickname!
-        avatarView.shortLabel.text = "耒物工作室创始人"//model.dateline!.withDate
         
-        homeCellContView.digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: Color_Tags, font: UIFont(fontSize: 14))
+        homeViewCellAvatar.nickLabel.text = "三杯茶茶"//model.nickname!
+        homeViewCellAvatar.shortLabel.text = "耒物工作室创始人"
         
-        homeCellBarView.praiseButton.setTitle(model.likes!.withCount, forState: .Normal)
-        homeCellBarView.discussButton.setTitle(model.comments!.withCount, forState: .Normal)
-        homeCellBarView.dateButton.setTitle("5分钟前", forState: .Normal)
-        //homeCellView.barView.dateLabel.text = "5分钟前"
-        //homeCellView.barView.backgroundColor = UIColor.grayColor()
+        homeViewCellContent.digestLabel.attributedText = model.content!.stringWithParagraphlineSpeace(6, color: Color_Description, font: UIFont(fontSize: 14))
         
-        avatarView.headView.tag = row
-        avatarView.nickLabel.tag = row
-        homeCellBarView.rowId = row
-        homeCellBarView.praiseButton.tag = row + 1
-        homeCellBarView.discussButton.tag = row + 2
-        homeCellBarView.shareButton.tag = row + 3
+        homeViewCellBar.praiseButton.setTitle(model.likes!.withCount, forState: .Normal)
+        homeViewCellBar.discussButton.setTitle(model.comments!.withCount, forState: .Normal)
+        homeViewCellBar.dateLabel.text = model.dateline!.withDate
+        
+        homeViewCellContent.tag = row
+        homeViewCellContent.coverView.tag = row
+        
+        homeViewCellAvatar.headView.tag = row
+        homeViewCellAvatar.nickLabel.tag = row
+        homeViewCellBar.rowID = row
+        homeViewCellBar.praiseButton.tag = row + 1
+        homeViewCellBar.discussButton.tag = row + 2
+        homeViewCellBar.shareButton.tag = row + 3
     }
 }

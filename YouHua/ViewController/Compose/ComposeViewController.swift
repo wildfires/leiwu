@@ -89,19 +89,19 @@ class ComposeViewController: UIViewController, ComposeProtocol {
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
         switch kind {
-        case UICollectionElementKindSectionHeader:
-            
-            let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "header", forIndexPath: indexPath) as! ComposeReusableView
-            headerView.initView(ComposeViewType.Header)
-            textData = headerView.textView.text
-            return headerView
-        case UICollectionElementKindSectionFooter:
-            
-            let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "footer", forIndexPath: indexPath) as! ComposeReusableView
-            footerView.initView(ComposeViewType.Footer)
-            return footerView
-        default:
-            return ComposeReusableView()
+            case UICollectionElementKindSectionHeader:
+                
+                let headerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "header", forIndexPath: indexPath) as! ComposeReusableView
+                headerView.initView(ComposeReusableViewType.Header)
+                textData = headerView.textView.text
+                return headerView
+            case UICollectionElementKindSectionFooter:
+                
+                let footerView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "footer", forIndexPath: indexPath) as! ComposeReusableView
+                footerView.initView(ComposeReusableViewType.Footer)
+                return footerView
+            default:
+                return ComposeReusableView()
         }
     }
     

@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+extension UILabel {
+    
+    
+    
+    
+}
+
 extension UIFont {
     
     convenience init(fontSize: CGFloat) {

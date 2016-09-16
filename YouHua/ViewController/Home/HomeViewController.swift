@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias HomeProtocol = protocol<UITableViewDelegate, UITableViewDataSource, HomeCellBarViewDelegate, HomeCellContViewDelegate, AvatarViewDelegate>
+typealias HomeProtocol = protocol<UITableViewDelegate, UITableViewDataSource, HomeViewCellBarDelegate, HomeViewCellContentDelegate, HomeViewCellAvatarDelegate>
 
 class HomeViewController: UIViewController, HomeProtocol {
     
@@ -116,9 +116,9 @@ class HomeViewController: UIViewController, HomeProtocol {
             
             cell.configureCell(data, indexPath: indexPath)
             self.rowHeight = cell.rowHeight
-            cell.avatarView.delegate = self
-            cell.homeCellContView.delegate = self
-            cell.homeCellBarView.delegate = self
+            cell.homeViewCellAvatar.delegate = self
+            cell.homeViewCellContent.delegate = self
+            cell.homeViewCellBar.delegate = self
         }
         return cell
     }
@@ -132,15 +132,7 @@ class HomeViewController: UIViewController, HomeProtocol {
 //        navigationController?.pushViewController(detailVC, animated: true)
 //    }
     
-    func homeCellContView(cell: HomeCellContView, didSelectedVideoAtIndex row: Int) {
-        
-        let videoVC = VideoViewController()
-        videoVC.hidesBottomBarWhenPushed = true
-        videoVC.videoUrl = viewModel.tableArray[row].video!
-        presentViewController(videoVC, animated: true, completion: nil)
-    }
-    
-    func avatarView(didSelectedAvatarAtIndex row: Int) {
+    func homeViewCellAvatar(didSelectedAvatarAtIndex row: Int) {
         
         let mineVC = MineViewController()
         mineVC.userid = viewModel.tableArray[row].did!
@@ -148,7 +140,34 @@ class HomeViewController: UIViewController, HomeProtocol {
         navigationController?.pushViewController(mineVC, animated: true)
     }
     
-    func homeCellBarViewDidSelectedButton(didSelectedAtIndex row: Int, didSelectedAtTag tag: Int) {
+    func homeViewCellContent(viewType: HomeViewCellContentType, didSelectedAtIndex row: Int) {
+        
+        //print("\(viewType) ... \(row)")
+        let data = viewModel.tableArray[row]
+        
+        switch viewType {
+            case .View:
+                
+                let detailVC = DetailViewController()
+                detailVC.hidesBottomBarWhenPushed = true
+                detailVC.detail_id = data.did!
+                navigationController?.pushViewController(detailVC, animated: true)
+            case .Cover:
+                
+                let coverVC = MineViewController()
+                coverVC.hidesBottomBarWhenPushed = true
+                coverVC.userid = data.did!
+                navigationController?.pushViewController(coverVC, animated: true)
+            case .Video:
+                
+                let videoVC = VideoViewController()
+                videoVC.hidesBottomBarWhenPushed = true
+                videoVC.videoUrl = data.video!
+                presentViewController(videoVC, animated: true, completion: nil)
+        }
+    }
+    
+    func homeViewCellBar(didSelectedAtIndex row: Int, didSelectedAtTag tag: Int) {
         
         let data = viewModel.tableArray[row]
         

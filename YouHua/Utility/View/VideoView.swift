@@ -60,7 +60,7 @@ class VideoView: UIView {
     var timeLabel: UILabel = {
         let temp = UILabel()
         temp.font = UIFont(fontSize: 8)
-        temp.textColor = UIColor.whiteColor()
+        temp.textColor = Color_White
         //temp.text = "0:00:00/0:00:00"
         return temp
     }()//播放时间
