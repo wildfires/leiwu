@@ -113,15 +113,15 @@ class DetailViewController: UIViewController, DetailProtocol {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         switch indexPath.section {
-        case 0:
-            
-            return contentRowHeight
-        case 1:
-            
-            return commentRowHeight
-        default:
-            
-            return 0
+            case 0:
+                
+                return contentRowHeight
+            case 1:
+                
+                return commentRowHeight
+            default:
+                
+                return 0
         }
     }
     

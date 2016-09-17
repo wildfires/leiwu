@@ -25,7 +25,7 @@ class MallViewModel: NSObject, WFProgress {
     
     func loadHomeNewData(collectionView: UICollectionView, finished: MallViewModelDataFinished) {
         
-        //weak var weakSelf: HomeViewModel? = self
+        weak var weakSelf: MallViewModel? = self
         collectionView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
             
             let params: [String: AnyObject] = [
@@ -47,6 +47,7 @@ class MallViewModel: NSObject, WFProgress {
                 for dict in data {
                     tempData.append(HomeModel(dict: dict as! [String : AnyObject]))
                 }
+                weakSelf!.currentPage = 0
                 finished(result: tempData)
             })
         })

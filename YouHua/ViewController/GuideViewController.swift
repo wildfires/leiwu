@@ -39,4 +39,8 @@ class GuideViewController: UIViewController {
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "firstLaunch")
         UIApplication.sharedApplication().keyWindow?.rootViewController = MainTabBarController()
     }
+    
+    deinit {
+        print("GuideViewController deinit")
+    }
 }

@@ -54,6 +54,7 @@
 		C34D20911D2758CF00A3ACB3 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34D20901D2758CF00A3ACB3 /* TestViewController.swift */; };
 		C34D20931D276D0D00A3ACB3 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34D20921D276D0D00A3ACB3 /* SettingViewController.swift */; };
 		C354AD4B1D63FEB70031F0D7 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C354AD4A1D63FEB70031F0D7 /* VideoViewController.swift */; };
+		C356AC1E1D8CCFAB0074DA4A /* GoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C356AC1D1D8CCFAB0074DA4A /* GoodsViewController.swift */; };
 		C35DDE061D8B8A0200FD9E35 /* WFLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35DDE051D8B8A0200FD9E35 /* WFLabel.swift */; };
 		C35DDE091D8BE04900FD9E35 /* MallViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35DDE081D8BE04900FD9E35 /* MallViewCell.swift */; };
 		C35DDE0B1D8BF13A00FD9E35 /* MallReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35DDE0A1D8BF13A00FD9E35 /* MallReusableView.swift */; };
@@ -269,6 +270,7 @@
 		C34D20901D2758CF00A3ACB3 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		C34D20921D276D0D00A3ACB3 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		C354AD4A1D63FEB70031F0D7 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		C356AC1D1D8CCFAB0074DA4A /* GoodsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoodsViewController.swift; sourceTree = "<group>"; };
 		C35DDE051D8B8A0200FD9E35 /* WFLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WFLabel.swift; sourceTree = "<group>"; };
 		C35DDE081D8BE04900FD9E35 /* MallViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MallViewCell.swift; sourceTree = "<group>"; };
 		C35DDE0A1D8BF13A00FD9E35 /* MallReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MallReusableView.swift; sourceTree = "<group>"; };
@@ -719,6 +721,7 @@
 			children = (
 				C35DDE071D8BE02700FD9E35 /* Cell */,
 				C36C53AC1D7527F1001A8ED2 /* MallViewController.swift */,
+				C356AC1D1D8CCFAB0074DA4A /* GoodsViewController.swift */,
 			);
 			path = Mall;
 			sourceTree = "<group>";
@@ -1195,6 +1198,7 @@
 				C3FEB5F21D1FAF16005BD6ED /* WFRichText.swift in Sources */,
 				C3055E7C1D22515A007BF30D /* CateViewController.swift in Sources */,
 				C3FFE5C61D23A8D1005DC097 /* MineViewController.swift in Sources */,
+				C356AC1E1D8CCFAB0074DA4A /* GoodsViewController.swift in Sources */,
 				C3FE38A71D421BA800E4AA2D /* MineReusableView.swift in Sources */,
 				C3477D191D22243100A4584A /* FindViewCell.swift in Sources */,
 				C35DDE0B1D8BF13A00FD9E35 /* MallReusableView.swift in Sources */,

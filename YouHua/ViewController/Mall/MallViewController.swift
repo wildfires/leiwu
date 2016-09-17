@@ -102,7 +102,7 @@ class MallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return viewModel.cellNumberOfRows //photosArray.count == 0 ? 1 : photosArray.count + 1// photosArray.count
+        return viewModel.cellNumberOfRows
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -121,7 +121,12 @@ class MallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        
+        let goodsVC = GoodsViewController()
+        goodsVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(goodsVC, animated: true)
     }
     
+    deinit {
+        print("MallViewController deinit")
+    }
 }

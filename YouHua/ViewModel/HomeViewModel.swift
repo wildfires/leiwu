@@ -25,7 +25,7 @@ class HomeViewModel: NSObject, WFProgress {
     
     func loadHomeNewData(tableView: UITableView, finished: HomeViewModelDataFinished) {
         
-        //weak var weakSelf: HomeViewModel? = self
+        weak var weakSelf: HomeViewModel? = self
         tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
             
             let params: [String: AnyObject] = [
@@ -47,6 +47,7 @@ class HomeViewModel: NSObject, WFProgress {
                 for dict in data {
                     tempData.append(HomeModel(dict: dict as! [String : AnyObject]))
                 }
+                weakSelf!.currentPage = 0
                 finished(result: tempData)
             })
         })

@@ -37,7 +37,7 @@ class MallViewCell: UICollectionViewCell {
     lazy var moreButton: UIButton = {
         let temp = UIButton()
         temp.backgroundColor = Color_ButtonMore
-        temp.setTitle("REED MORE", forState: .Normal)
+        temp.setTitle("READ MORE", forState: .Normal)
         temp.setTitleColor(Color_White, forState: .Normal)
         temp.titleLabel?.font = UIFont(fontSize: 12)
         return temp
